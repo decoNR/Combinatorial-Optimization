@@ -1,0 +1,166 @@
+\documentclass[11pt,leqno,final]{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{etoolbox}
+\usepackage{background}
+
+%my stuff
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newcommand*{\deltaout}[1][]{\delta_{#1}^{\scriptscriptstyle \textrm{out}}}
+\newcommand*{\deltain}[1][]{\delta_{#1}^{\scriptscriptstyle \textrm{in}}}
+
+%--------------------------------
+
+\SetBgContents{\rule{\paperwidth}{0.8pt}}
+\SetBgColor{gray!50}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgScale{1}
+
+\theoremstyle{definition}
+\newtheorem{solution}{Solution}
+\AtEndEnvironment{solution}{\clearpage}
+
+\begin{document}
+% DO NOT WASTE SPACE by copying the exercise statement.
+% The grader already knows which exercise you are solving from the
+% solution counter.
+
+
+\begin{solution}
+The user should provide a shore of the directed cut. This object must be easy to build when the user is getting his directed cut. This object will be called $S$ in the algorithm. 
+
+\begin{algorithm}
+  \caption{Verify-Directed-Cut($D$, $B$, $S$)}\label{dcut}
+  \begin{algorithmic}
+    \For{each $a \in A(D)$}
+      \State $v,u \gets ends[a]$
+
+      \If{$v \in S$ and $u \notin S$}
+        \If{$a$ $\notin B$}
+          \State \Return False
+        \EndIf
+
+      \ElsIf{$v \notin S$ and $u \in S$}
+        \State \Return False
+ 
+
+      \ElsIf{$v \in S$ and $u \in S$}
+        \If{$a$ $\in B$}
+          \State \Return False
+        \EndIf
+
+      \Else 
+        \If{$a$ $\in B$}
+          \State \Return False
+        \EndIf
+      \EndIf
+
+    \EndFor
+
+    \State \Return True
+      
+  \end{algorithmic}
+\end{algorithm}
+
+
+\end{solution}
+
+\begin{solution}
+The only edge on H1min will be the cuts of the vertices that are connected. Besides those, all the other are one of those plus an extra edge added by the fact that you can choose another vertex to be a shore of the new cut. There are two excuses that are when you have a vertex that has no outward edges and loops.
+
+To prove that those are minimal, it is impossible to have just a part of the arcs on this cut. If you change, you will lose the arcs from the vertex that you took from the shore and add new arcs or nothing will change.
+
+All the arcs is one set on H2. Reducing a bit, we can think about all the paths and the minimal sets of arcs that makes no rs paths to exist are one arc of each 'parallel' path or arcs that are from different paths.
+
+$H_1min \subset H_2min$:\\
+first approach is on the notebook\\
+second approach is just say that every element is in H2min. If h1 is a minimal rs cut it means that there is no R such that r $\in$ R $\subset$ V\\s with part of those arcs. The rs cut, by definition gets all the outward edges from a set and given that it is impossible to have a rs path between r and s. This is the minimal b because if there was an arc that you can get out of it would be a dead end or a loop.\\
+
+$H_2min \subset H_1min$:\\
+first approach is to say that every element is in H1min. It is a rs cut because you can have a shore that is all the vertices connected from are to the vertices that the outward edges are on B. If that is not a shore, you can either find a loop or a dead end. And it is minimal because if was not you could discard an edge, but then you can not have a shore, because if it is a rs path you would have at least r with an outward edge in the set.
+
+\end{solution}
+
+\begin{solution}
+  
+  The following algorithm solves the problem.
+  \begin{algorithm}
+    \caption{MinimizeWalk($D$, $r$, $s$)}\label{1mod3}
+    \begin{algorithmic}
+      \State $V_{\textnormal{aux}} \gets \emptyset$ \Comment{set of vertices of an auxiliary digraph}
+      \State $A_{\textnormal{aux}} \gets \emptyset$\Comment{set of arcs of an auxiliary digraph}
+      \For{\texttt{each $v \in V(D)$}}
+        \State $V_{\textnormal{aux}} \gets V_{\textnormal{aux}} \cup v_0 \cup v_0 \cup v_0$
+      \EndFor
+      \For{\texttt{each $a \in V(A)$}}
+        \State $v,u \gets ends[a]$
+        \State $A_{\textnormal{aux}} \gets A_{\textnormal{aux}} \cup v_0u_1 \cup v_1u_2 \cup v_2u_0$
+      \EndFor
+
+      \State $\pi, d \gets \textnormal{Breadth-First-Search}((V_{\textnormal{aux}}, A_{\textnormal{aux}}),v)$
+      
+      \If{$d[s_1] < \infty$}
+        \State $p_{\textnormal{aux}} \gets$ Path-From-Branching$((\pi,d),s)$
+        \State $p \ gets []$ \Comment{Will have the rs-walk asked}
+        \For{each element in $p_{\textnormal{aux}}$}
+          \State ??? Como eu passo de volta pro inicial?
+        \EndFor
+      \EndIf
+
+      \State \Return NIL
+        
+    \end{algorithmic}
+  \end{algorithm}
+
+  Using the TA's hint, let $D_{\textnormal{aux}}(V_{\textnormal{aux}}, A_{\textnormal{aux}})$ be an auxiliary digraph built from $D$ based on two rules:
+  \begin{itemize}
+    \item For each $v \in V(D)$, $V_{\textnormal{aux}}$ has three vertices $v_0, v_1, v_2$, so the size of $V_{\textnormal{aux}}$ is three times the size of $V(D)$. 
+    \item For each arc $vu \in A(D)$, $A_{\textnormal{aux}}$ has three arcs ${v_0u_1, v_1u_2, v_2u_0}$. Also, $A_{\textnormal{aux}}$ is three times the size of $A(D)$.
+  \end{itemize} 
+
+  After building this auxiliary digraph, we run a Breadth-First-Search and verify if there is a path from $r_0$ to $s_1$. The idea to do that is that every path that ends on a node labeled with the number 1 is a path where the length $l \equiv 1$ (mod 3). This is evident because using the auxiliary digraph, every node that you transverse you go from label 0 to 1, 1 to 2, or 2 to 0, meaning that if you start at a vertex with label 0 ($r_0$), each vertex that you traverse, you are adding a label mod 3, and therefore the length of the path is you find the label mod 3.
+
+  Also, if there is a rs walk, where $l \equiv 1$ (mod 3), this algorithm will find it. First, every possible walk is also possible in the auxiliary digraph given that every node that is reachable from a node on the original graph is also reachable on the auxiliary digraph. This algorithm acount for paths that you go through the same vertex multiple times given that if the rest of the division by three is different for the same thing on the last time you traverse this vertex.
+
+\end{solution}
+
+
+\begin{solution}
+  The following algorithm is the solution.
+
+  \begin{algorithm}
+    \caption{Matching-or-Hall-Set ($G, (A, B)$)}\label{mh}
+    \begin{algorithmic}
+      \State $M,K \gets$ Konig's-Algorithm ($G,(A,B)$)
+      \If{$M$ saturates $A$}
+        \State \Return $M$ \Comment{Can I do this?}
+      \EndIf
+
+      \For{each $v \in A$}
+        \If{$v \notin M$}
+          \State $S \gets \emptyset$ \Comment{S will be the subset described in the question}
+
+          \State $\pi, d \gets \textnormal{Breadth-First-Search}(G,v)$
+
+          \For{each $u \in V(G)$}
+            \If{(d[u] $< \infty$) and ($u \in A$)}
+              \State $S \gets S \cup u$
+            \EndIf
+          \EndFor
+            \State \Return $S$
+
+        \EndIf
+      \EndFor
+
+        
+    \end{algorithmic}
+  \end{algorithm}
+
+  It is correct because if the connected component always go back to the set A if it goes to the set B, because v and the subsequent are only connected to vertices on the matching, therefore this vertex is connected to a vertex in A.
+
+  If the vertex has a neighbor it will go back to the set A because if it was not the case the matching would not be the maximum matching.
+
+\end{solution}
+
+\end{document}

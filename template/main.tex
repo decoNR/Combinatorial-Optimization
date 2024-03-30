@@ -1,0 +1,31 @@
+\documentclass[11pt,leqno,final]{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{etoolbox}
+\usepackage{background}
+
+\SetBgContents{\rule{\paperwidth}{0.8pt}}
+\SetBgColor{gray!50}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgScale{1}
+
+\theoremstyle{definition}
+\newtheorem{solution}{Solution}
+\AtEndEnvironment{solution}{\clearpage}
+
+\begin{document}
+% DO NOT WASTE SPACE by copying the exercise statement.
+% The grader already knows which exercise you are solving from the
+% solution counter.
+
+\begin{solution}
+  Blah blah blah\ldots
+\end{solution}
+
+\setcounter{solution}{2}        % if you want to skip an exercise
+
+\begin{solution}
+  Yakety yak\ldots
+\end{solution}
+
+\end{document}
