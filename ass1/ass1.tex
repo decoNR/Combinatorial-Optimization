@@ -25,10 +25,10 @@
 % DO NOT WASTE SPACE by copying the exercise statement.
 % The grader already knows which exercise you are solving from the
 % solution counter.
-
+%---------------------------------------------------
 
 \begin{solution}
-The user should provide a shore of the directed cut. This object must be easy to build when the user is getting his directed cut. This object will be called $S$ in the algorithm. 
+The user should provide $S \subseteq V(D)$, such that $\deltaout(S) = B$ and $\deltain(S) = \emptyset$, where $B$ is the directed cut. This object must be easy to have when the user provides a directed cut. 
 
 \begin{algorithm}
   \caption{Verify-Directed-Cut($D$, $B$, $S$)}\label{dcut}
@@ -36,8 +36,8 @@ The user should provide a shore of the directed cut. This object must be easy to
     \For{each $a \in A(D)$}
       \State $v,u \gets ends[a]$
 
-      \If{$v \in S$ and $u \notin S$}
-        \If{$a$ $\notin B$}
+      \If{$v \in S$ and $u \notin S$} \Comment{This can be done in constant time using an auxiliary array}
+        \If{$a$ $\notin B$} \Comment{Same thing from above comment}
           \State \Return False
         \EndIf
 
@@ -50,7 +50,7 @@ The user should provide a shore of the directed cut. This object must be easy to
           \State \Return False
         \EndIf
 
-      \Else 
+      \Else
         \If{$a$ $\in B$}
           \State \Return False
         \EndIf
@@ -67,31 +67,28 @@ The user should provide a shore of the directed cut. This object must be easy to
 \end{solution}
 
 \begin{solution}
-The only edge on H1min will be the cuts of the vertices that are connected. Besides those, all the other are one of those plus an extra edge added by the fact that you can choose another vertex to be a shore of the new cut. There are two excuses that are when you have a vertex that has no outward edges and loops.
 
-To prove that those are minimal, it is impossible to have just a part of the arcs on this cut. If you change, you will lose the arcs from the vertex that you took from the shore and add new arcs or nothing will change.
+I will prove that $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$ by showing that $H_{1}^{\textnormal{min}} \subseteq H_{2}^{\textnormal{min}}$ and that $H_{2}^{\textnormal{min}} \subseteq H_{1}^{\textnormal{min}}$. We will show that $x \subseteq y$ by proving that an arbitrary element $x_0 \in x$ lies in $y$.
 
-All the arcs is one set on H2. Reducing a bit, we can think about all the paths and the minimal sets of arcs that makes no rs paths to exist are one arc of each 'parallel' path or arcs that are from different paths.
+Given $ h_1 \in H_{1}^{\textnormal{min}}$, $h_1$ is a minimal $rs$-cut. By definition, $h_1$ is a set of all the outwards arcs from a set of vertices that includes $r$ and exclude $s$, and therefore $h_1 \subseteq H_{2}$, because it is impossible to have an $rs$-path if there are no arcs from this set and the other vertices of $V(D)$. $h_1$ is minimal in $H_2$ if every element in $h_1$ is an arc that can be in a different $rs$-path from the other arcs, and it is not an arc that only is in walks that just adds arcs to an $rs$-path with another arc in $h_1$, otherwise it could be removed, and this new set would be a proper subset of $h_1$. First, $h_1$ does not have more than one arc sharing only same $rs$-paths because it would not be minimal in $H_{1}^{\textnormal{min}}$ given that you could just remove all the arcs besides the one that is further from $r$ and the set would still be an $rs$-cut (a possible shore is to maintain the previous shore and add all the vertices along the paths till the farthest one). Second, there are no arcs in $h_1$ that are part of an extension (loops) to an $rs-path$ with another arc in $h_1$ because you could remove it by having a new shore that adds all the vertices of the loops to a shore associated with the previous $rs$-cut. Finally, it is not possible to have an arc in $h_1$ that leads to path that does not reach $s$ because this is not a minimal $rs$-cut given that you could add all the vertices of those dead end paths to the previous shore to have a new shore associated with an $rs$-cut that is a subset of the previous $rs$-cut. Given all the arguments, $h_1 \subseteq H_{2}$, and it is minimal in $H_2$, thus $H_{1}^{\textnormal{min}} \subseteq H_{2}^{\textnormal{min}}$.
 
-$H_1min \subset H_2min$:\\
-first approach is on the notebook\\
-second approach is just say that every element is in H2min. If h1 is a minimal rs cut it means that there is no R such that r $\in$ R $\subset$ V\\s with part of those arcs. The rs cut, by definition gets all the outward edges from a set and given that it is impossible to have a rs path between r and s. This is the minimal b because if there was an arc that you can get out of it would be a dead end or a loop.\\
+Given $ h_2 \in H_{2}^{\textnormal{min}}$, $h_2$ is a minimal subset $B \subseteq A$ such that $D - B$ has no rs-path. This is an $rs$-cut because you can have a shore that is a set of all the vertices connected from $r$ to the vertices that the outward edges are on B. If those vertices have arcs that are not in $B$, it means that is an arc that does not lead to a new path to $s$ or is part of a loop that goes back to a vertex in the path which the arc that is in $B$ is part of. In both cases, because of the aspects I explained in the last paragraph, you could have a new shore, including all the vertices of the loop and the paths that do not reach $s$, which is associated with a new $rs$-cut without those arcs that are not in $B$. Thus, $h_2 \subseteq H_{1}$. Also, $h_2$ is minimal in $H_1$ because if you remove an arc $a_2$ from $h_2$, you can not have a shore associated with the $rs$-cut $h_2 - a_2$. This holds because this arc is a unique arc from an $rs$-path in $h_2$. If you add any neighbor of the tail of $a_2$ in a $h_2$ shore to try to remove $a_2$ from $h_2$, you will add at least one arc in $h_2$ because the end of the $rs$-path is $s$ and $s$ can not be in a shore. If you try to remove vertices from a shore associated with $h_2$ you would add at least one arc to $h_2$ because the beginning of the $rs$-path is $r$ and $r$ is in every possible shore. In both cases you can not remove an arc from $h_2$ without adding another arc. Given that, $h_2 \subseteq H_{1}$, and it is minimal in $H_1$, thus $H_{2}^{\textnormal{min}} \subseteq H_{1}^{\textnormal{min}}$.
 
-$H_2min \subset H_1min$:\\
-first approach is to say that every element is in H1min. It is a rs cut because you can have a shore that is all the vertices connected from are to the vertices that the outward edges are on B. If that is not a shore, you can either find a loop or a dead end. And it is minimal because if was not you could discard an edge, but then you can not have a shore, because if it is a rs path you would have at least r with an outward edge in the set.
+By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
 
 \end{solution}
 
 \begin{solution}
   
   The following algorithm solves the problem.
+
   \begin{algorithm}
     \caption{MinimizeWalk($D$, $r$, $s$)}\label{1mod3}
     \begin{algorithmic}
       \State $V_{\textnormal{aux}} \gets \emptyset$ \Comment{set of vertices of an auxiliary digraph}
       \State $A_{\textnormal{aux}} \gets \emptyset$\Comment{set of arcs of an auxiliary digraph}
       \For{\texttt{each $v \in V(D)$}}
-        \State $V_{\textnormal{aux}} \gets V_{\textnormal{aux}} \cup v_0 \cup v_0 \cup v_0$
+        \State $V_{\textnormal{aux}} \gets V_{\textnormal{aux}} \cup v_0 \cup v_1 \cup v_2$
       \EndFor
       \For{\texttt{each $a \in V(A)$}}
         \State $v,u \gets ends[a]$
@@ -102,10 +99,8 @@ first approach is to say that every element is in H1min. It is a rs cut because 
       
       \If{$d[s_1] < \infty$}
         \State $p_{\textnormal{aux}} \gets$ Path-From-Branching$((\pi,d),s)$
-        \State $p \ gets []$ \Comment{Will have the rs-walk asked}
-        \For{each element in $p_{\textnormal{aux}}$}
-          \State ??? Como eu passo de volta pro inicial?
-        \EndFor
+        \State $p \gets $ Relabeling($p_{\textnormal{aux}}$) \Comment{This function will be explained below}
+        \State \Return $p$
       \EndIf
 
       \State \Return NIL
@@ -119,19 +114,21 @@ first approach is to say that every element is in H1min. It is a rs cut because 
     \item For each arc $vu \in A(D)$, $A_{\textnormal{aux}}$ has three arcs ${v_0u_1, v_1u_2, v_2u_0}$. Also, $A_{\textnormal{aux}}$ is three times the size of $A(D)$.
   \end{itemize} 
 
+  The Relabeling($p_{\textnormal{aux}}$) function receives a path on the auxiliary digraph and relabel all the vertices and edges to match with the original graph. If a vertex has label $v_i, i \in {0,1,2}$ it will be relabeled to $v$. An edge from $v_i u_j, i \in {0,1,2}, j \in {0,1,2}$, will be relabeled to $vu$. This will make sure the path is the according path in the original graph.
+
   After building this auxiliary digraph, we run a Breadth-First-Search and verify if there is a path from $r_0$ to $s_1$. The idea to do that is that every path that ends on a node labeled with the number 1 is a path where the length $l \equiv 1$ (mod 3). This is evident because using the auxiliary digraph, every node that you transverse you go from label 0 to 1, 1 to 2, or 2 to 0, meaning that if you start at a vertex with label 0 ($r_0$), each vertex that you traverse, you are adding a label mod 3, and therefore the length of the path is you find the label mod 3.
 
-  Also, if there is a rs walk, where $l \equiv 1$ (mod 3), this algorithm will find it. First, every possible walk is also possible in the auxiliary digraph given that every node that is reachable from a node on the original graph is also reachable on the auxiliary digraph. This algorithm acount for paths that you go through the same vertex multiple times given that if the rest of the division by three is different for the same thing on the last time you traverse this vertex.
+  Also, if there is a rs walk, where $l \equiv 1$ (mod 3), this algorithm will find it. First, every possible walk is also possible in the auxiliary digraph given that every node that is reachable from a node on the original graph is also reachable on the auxiliary digraph. This algorithm acount for paths that you go through the same vertex multiple times given that if the rest of the division by three is different for the same thing on the last time you traverse this vertex. So if there is a walk $l \equiv 1$ (mod 3), it will be a different path on the new digraph, and therefore the BFS will get this path.
 
 \end{solution}
 
 
 \begin{solution}
-  The following algorithm is the solution.
+  First, it is impossible to have both objects at the same time. If you have a matching that saturates $A$, every element of A has a distinct neighbor in $B$ by the definition of matching. Therefore, if there is a matching that saturates $A$, the inequality for $S \subseteq A$, $|S| \leq |N (S)|$ holds.
 
   \begin{algorithm}
     \caption{Matching-or-Hall-Set ($G, (A, B)$)}\label{mh}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
       \State $M,K \gets$ Konig's-Algorithm ($G,(A,B)$)
       \If{$M$ saturates $A$}
         \State \Return $M$ \Comment{Can I do this?}
@@ -160,6 +157,8 @@ first approach is to say that every element is in H1min. It is a rs cut because 
   It is correct because if the connected component always go back to the set A if it goes to the set B, because v and the subsequent are only connected to vertices on the matching, therefore this vertex is connected to a vertex in A.
 
   If the vertex has a neighbor it will go back to the set A because if it was not the case the matching would not be the maximum matching.
+
+  On line 1 we run Konig's algorithm that was analyzed in class. Lines 2, 3 and 4 can be done in linear time using an array to mark each vertex in $A$ that the arcs on the matching has an end and then go through this array to verify $M$ saturates $A$. The FOR loop on line 5 runs at most $|A|$ times, but the IF on line 6 is true only one time, because if it is true, latter will have a RETURN at line 14. Given that, we will run one BFS $(O (|V(G)| + |E(G)|))$ and the FOR at line 9 will run one time $(O (|V(G)|))$. Thus, the time of Konig's algorithm defines the time of the algorithm \ref{mh}, $(O (|V(G)|(|V(G)| + |E(G)|)))$.
 
 \end{solution}
 
