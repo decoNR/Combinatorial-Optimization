@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1711883677 "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass1.tex" "ass1.pdf" "ass1" 1711883677
+["pdflatex"] 1711936148 "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass1.tex" "ass1.pdf" "ass1" 1711936148
   "/etc/texmf/web2c/texmf.cnf" 1709902086 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass1.tex" 1711883676 15325 7ca0932d5ccb99a44ed2df0e524d10d0 ""
+  "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass1.tex" 1711936148 17600 798409532d99e6a36d789cae9c0b0f3b ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -29,6 +29,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm" 1136768653 768 1321e9409b4137d6fb428ac9dc956269 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
@@ -141,8 +142,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1709902100 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710526460 2801064 aa22a8da880a9c7c05efb7e0fe53274c ""
-  "ass1.aux" 1711883677 910 975f7c3422eefb70621d83dfb8bf06a7 "pdflatex"
-  "ass1.tex" 1711883676 15325 7ca0932d5ccb99a44ed2df0e524d10d0 ""
+  "ass1.aux" 1711936148 867 d3b4502d6ce316457399d1c2c1f6a56c "pdflatex"
+  "ass1.tex" 1711936148 17600 798409532d99e6a36d789cae9c0b0f3b ""
   (generated)
   "ass1.aux"
   "ass1.log"

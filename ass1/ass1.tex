@@ -64,18 +64,20 @@ The user should provide $S \subseteq V(D)$, such that $\deltaout(S) = B$ and $\d
   \end{algorithmic}
 \end{algorithm}
 
+It is important to state that building the auxiliary arrays mentioned on the pseudocode costs linear time on the size of the associated sets. 
+
 
 \end{solution}
 
 \begin{solution}
 
-I will prove that $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$ by showing that $H_{1}^{\textnormal{min}} \subseteq H_{2}^{\textnormal{min}}$ and that $H_{2}^{\textnormal{min}} \subseteq H_{1}^{\textnormal{min}}$. I will show that $x \subseteq y$ by proving that an arbitrary element $x_0 \in x$ lies in $y$.
+  I will prove that $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$ by showing that $H_{1}^{\textnormal{min}} \subseteq H_{2}^{\textnormal{min}}$ and that $H_{2}^{\textnormal{min}} \subseteq H_{1}^{\textnormal{min}}$. I will show that $X \subseteq Y$ by proving that an arbitrary element $x_0 \in X$ lies in $Y$.
 
-Given $ h_1 \in H_{1}^{\textnormal{min}}$, $h_1$ is a minimal $rs$-cut. By definition, $h_1$ is a set of all the outwards arcs from a set of vertices that includes $r$ and exclude $s$, and therefore $h_1 \subseteq H_{2}$, because it is impossible to have an $rs$-path if there are no arcs from this set and the other vertices of $V(D)$. $h_1$ is minimal in $H_2$ if every element in $h_1$ is an arc that can be in a different $rs$-path from the other arcs, and it is not an arc that only is in walks that just adds arcs to an $rs$-path with another arc in $h_1$, otherwise it could be removed, and this new set would be a proper subset of $h_1$. First, $h_1$ does not have more than one arc sharing only same $rs$-paths because it would not be minimal in $H_{1}^{\textnormal{min}}$ given that you could just remove all the arcs besides the one that is further from $r$ and the set would still be an $rs$-cut (a possible shore is to maintain the previous shore and add all the vertices along the paths till the farthest one). Second, there are no arcs in $h_1$ that are part of an extension (loops) to an $rs-path$ with another arc in $h_1$ because you could remove it by having a new shore that adds all the vertices of the loops to a shore associated with the previous $rs$-cut. Finally, it is not possible to have an arc in $h_1$ that leads to path that does not reach $s$ because this is not a minimal $rs$-cut given that you could add all the vertices of those dead end paths to the previous shore to have a new shore associated with an $rs$-cut that is a subset of the previous $rs$-cut. Given all the arguments, $h_1 \subseteq H_{2}$, and it is minimal in $H_2$, thus $H_{1}^{\textnormal{min}} \subseteq H_{2}^{\textnormal{min}}$.
-
-Given $ h_2 \in H_{2}^{\textnormal{min}}$, $h_2$ is a minimal subset $B \subseteq A$ such that $D - B$ has no rs-path. This is an $rs$-cut because you can have a shore that is a set of all the vertices connected from $r$ to the vertices that the outward edges are on B. If those vertices have arcs that are not in $B$, it means that is an arc that does not lead to a new path to $s$ or is part of a loop that goes back to a vertex in the path which the arc that is in $B$ is part of. In both cases, because of the aspects I explained in the last paragraph, you could have a new shore, including all the vertices of the loop and the paths that do not reach $s$, which is associated with a new $rs$-cut without those arcs that are not in $B$. Thus, $h_2 \subseteq H_{1}$. Also, $h_2$ is minimal in $H_1$ because if you remove an arc $a_2$ from $h_2$, you can not have a shore associated with the $rs$-cut $h_2 - a_2$. This holds because this arc is a unique arc from an $rs$-path in $h_2$. If you add any neighbor of the tail of $a_2$ in a $h_2$ shore to try to remove $a_2$ from $h_2$, you will add at least one arc in $h_2$ because the end of the $rs$-path is $s$ and $s$ can not be in a shore. If you try to remove vertices from a shore associated with $h_2$ you would add at least one arc to $h_2$ because the beginning of the $rs$-path is $r$ and $r$ is in every possible shore. In both cases you can not remove an arc from $h_2$ without adding another arc. Given that, $h_2 \subseteq H_{1}$, and it is minimal in $H_1$, thus $H_{2}^{\textnormal{min}} \subseteq H_{1}^{\textnormal{min}}$.
-
-By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
+  Given $ h_1 \in H_{1}^{\textnormal{min}}$, $h_1$ is a minimal $rs$-cut. By definition, $h_1$ is a set of all the outwards arcs from a set of vertices that includes $r$ and exclude $s$, and therefore $h_1 \subseteq H_{2}$, because it is impossible to have an $rs$-path if there are no arcs from this set and the other vertices of $V(D)$. $h_1$ is minimal in $H_2$ if every element in $h_1$ is an arc that can be in a different $rs$-path from the other arcs, and it is not an arc that only is in walks that just adds arcs to an $rs$-path with another arc in $h_1$, otherwise, it could be removed, and this new set would be a proper subset of $h_1$. First, $h_1$ does not have more than one arc sharing only same $rs$-paths because it would not be minimal in $H_{1}^{\textnormal{min}}$ given that you could just remove all the arcs besides the one that is further from $r$ and the set would still be an $rs$-cut (a possible shore is to maintain the previous shore and add all the vertices along the paths till the farthest one). Second, there are no arcs in $h_1$ that are part of an extension (loops) to an $rs-path$ with another arc in $h_1$ because you could remove it by having a new shore that adds all the vertices of the loops to a shore associated with the previous $rs$-cut. Finally, it is not possible to have an arc in $h_1$ that leads to a path that does not reach $s$ because this is not a minimal $rs$-cut given that you could add all the vertices of those dead-end paths to the previous shore to have a new shore associated with an $rs$-cut that is a subset of the previous $rs$-cut. Given all the arguments, $h_1 \subseteq H_{2}$, and it is minimal in $H_2$, thus $H_{1}^{\textnormal{min}} \subseteq H_{2}^{\textnormal{min}}$.
+  
+  Given $ h_2 \in H_{2}^{\textnormal{min}}$, $h_2$ is a minimal subset $B \subseteq A$ such that $D - B$ has no rs-path. $h_2$ is an $rs$-cut because you can have a shore that is a set of all the vertices connected from $r$ to the vertices that the outward edges are on B. If those vertices have arcs that are not in $B$, it means that it is an arc that does not lead to a new path to $s$ or is part of a loop that goes back to a vertex in the path which the arc that is in $B$ is part of. In both cases, because of the arguments I explained in the last paragraph, you could have a new shore, including all the vertices of the loop and the paths that do not reach $s$, which is associated with a new $rs$-cut without those arcs that are not in $B$. Thus, $h_2 \subseteq H_{1}$. Also, $h_2$ is minimal in $H_1$ because if you remove an arc $a_2$ from $h_2$, you can not have a shore associated with the $rs$-cut $h_2 - a_2$. This holds because this arc is a unique arc from an $rs$-path in $h_2$. If you add any neighbor of the tail of $a_2$ in a $h_2$ shore to try to remove $a_2$ from $h_2$, you will add at least one arc in $h_2$ because the end of the $rs$-path is $s$ and $s$ can not be in a shore. If you try to remove vertices from a shore associated with $h_2$, you would add at least one arc to $h_2$ because the beginning of the $rs$-path is $r$, and $r$ is in every possible shore. In both cases, you can not remove an arc from $h_2$ without adding another arc. Given that, $h_2 \subseteq H_{1}$, and it is minimal in $H_1$, thus $H_{2}^{\textnormal{min}} \subseteq H_{1}^{\textnormal{min}}$.
+  
+  By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
 
 \end{solution}
 
@@ -86,8 +88,8 @@ By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
   \begin{algorithm}
     \caption{MinimizeWalk($D$, $r$, $s$)}\label{1mod3}
     \begin{algorithmic}
-      \State $V_{\textnormal{aux}} \gets \emptyset$ \Comment{set of vertices of an auxiliary digraph}
-      \State $A_{\textnormal{aux}} \gets \emptyset$\Comment{set of arcs of an auxiliary digraph}
+      \State $V_{\textnormal{aux}} \coloneqq \emptyset$ \Comment{set of vertices of an auxiliary digraph}
+      \State $A_{\textnormal{aux}} \coloneqq \emptyset$\Comment{set of arcs of an auxiliary digraph}
       \For{\texttt{each $v \in V(D)$}}
         \State $V_{\textnormal{aux}} \gets V_{\textnormal{aux}} \cup (v,0) \cup (v,1) \cup (v,2)$ \Comment{new vertices on the auxiliary digraph}
       \EndFor
@@ -96,11 +98,11 @@ By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
         \State $A_{\textnormal{aux}} \gets A_{\textnormal{aux}} \cup ((v,0),(u,1)) \cup ((v,1),(u,2)) \cup ((v,2),(u,0))$
       \EndFor
 
-      \State $\pi, d \gets \textnormal{Breadth-First-Search}((V_{\textnormal{aux}}, A_{\textnormal{aux}}),v)$
+      \State $\pi, d \coloneqq \textnormal{Breadth-First-Search}((V_{\textnormal{aux}}, A_{\textnormal{aux}}),v)$
       
       \If{$d[s_1] < \infty$}
-        \State $p_{\textnormal{aux}} \gets$ Path-From-Branching$((\pi,d),s)$
-        \State $p \gets $ Relabeling($p_{\textnormal{aux}}$) \Comment{This function will be explained below}
+        \State $p_{\textnormal{aux}} \coloneqq$ Path-From-Branching$((\pi,d),s)$
+        \State $p \coloneqq $ Relabeling($p_{\textnormal{aux}}$) \Comment{This function will be explained below}
         \State \Return $p$
       \EndIf
 
@@ -115,22 +117,25 @@ By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
     \item For each arc $vu \in A(D)$, $A_{\textnormal{aux}}$ has three arcs ${v_0u_1, v_1u_2, v_2u_0}$. Also, $A_{\textnormal{aux}}$ is three times the size of $A(D)$.
   \end{itemize}
 
-  The algorithm builds the auxiliary digraph, runs a Breadth-First-Search on the auxiliary digraph, and then translate the answer to the desired result.
+  The algorithm builds the auxiliary digraph, runs a Breadth-First-Search on the auxiliary digraph, and then translates the answer to the desired result.
   
-  I will prove the correctness of the algorithm by proving that I can ensure that the $rs$-path the algorithm finds in the auxiliary graph is $rs$-walk that has length $l \equiv 1$ (mod 3). Also, I have to prove that, if there is an $rs$-walk in $D$ that has length $l \equiv 1$ (mod 3), we will find it using the provided algorithm. The last statement I will divide in two parts, prove that every walk in $D$ has a correspondent walk in the auxiliary digraph, and that we will find the correspondent path for a $rs$-walk in $D$ that has length $l \equiv 1$ (mod 3) if it exists.
+  I will prove the correctness of the algorithm by proving that I can ensure that the $rs$-path the algorithm finds in the auxiliary graph is an $rs$-walk with length $l \equiv 1$ (mod 3). Also, I have to prove that if there is an $rs$-walk in $D$ with length $l \equiv 1$ (mod 3), we will find it using the provided algorithm. The last statement I will divide into two parts, prove that every walk in $D$ has a correspondent walk in the auxiliary digraph and that we will find the correspondent path for a $rs$-walk in $D$ that has length $l \equiv 1$ (mod 3) if it exists.
 
-  After building this auxiliary digraph, we run a Breadth-First-Search and verify if there is a path from $r_0$ to $s_1$. The idea to do that is that every path on the auxiliary digraph that ends on a vertex of the form $(v,1)$ is a path where the length $l \equiv 1$ (mod 3). This is evident because, using the auxiliary digraph, every node that you transverse you go from a vertex of the form $(v,i), i \in \{0,1,2\}$ to a vertex of the form $(u, (i+1)\%3)$, where $\%$ is the operator that gives you the remainder of the division. As for each arc that you traverse the length of the path increases 1, if you start at a vertex of the form $(v,0)$, considering a walk $w$, for each vertex $(v,i), i \in \{0,1,2\}$ of the walk, holds that the length of $w$ is equivalent to $i$ mod 3. By that, if we end on a vertex of the form $(v,1)$, the length $l$ of the path on the auxiliary digraph is equivalent to 1 mod 3.
+  After building this auxiliary digraph, we run a Breadth-First-Search and verify if there is a path from $r_0$ to $s_1$. The idea to do that is that every path on the auxiliary digraph that ends on a vertex of the form $(v,1)$ is a path where the length $l \equiv 1$ (mod 3). This is evident because, using the auxiliary digraph, for every node that you traverse, you go from a vertex of the form $(v,i), i \in \{0,1,2\}$ to a vertex of the form $(u, (i+1)\%3)$, where $\%$ is the operator that gives you the remainder of the division. As for each arc that you traverse, the length of the path increases 1, if you start at a vertex of the form $(v,0)$, considering a walk $w$, for each vertex $(v,i), i \in \{0,1,2\}$ of the walk, holds that the length of $w$ is equivalent to $i$ mod 3. By that, if we end on a vertex of the form $(v,1)$, the length $l$ of the path on the auxiliary digraph is equivalent to 1 mod 3.
 
-  Also, if there is an $rs$-walk, where the length $l \equiv 1$ (mod 3), this algorithm will find it. First, every walk in $D$ has a correspondent walk in the auxiliary digraph because if you can go from a vertex $v$ to a vertex $u$ on $D$, you can go from a vertex of the form $(v,i), i \in \{0,1,2\}$ to a vertex of the form $(u,(i+1)\%3)$ in the auxiliary digraph. If you ignore the second element you will have a walk that can be easily converted to the walk in $D$. If a walk in $D$ goes through an arc more than one time in different manners, meaning that, when you go through this arc, the length of the current walk is different from the previous times, this walk is transformed in a path on the auxiliary digraph because the ends of the correspondents arcs of this arc in the auxiliary digraph will be different in the two mentioned steps of the walk. Given that the walk in $D$ that goes through the same arc more than one time is not relevant for our goal because the walk without the loop and this walk will have the same result in respect to the length mod 3. By that, all the walks we are interested are transformed into paths in the auxiliary graph. Therefore, you can have the shortest $rs$-path from $(r,0) \to (s,1)$, on the auxiliary graph, that is actually the shortest $rs$-walk on $D$ with length $l \equiv 1$ (mod 3), by running a Breadth-First-Search on the auxiliary digraph with the mentioned arguments.
+  Also, if there is an $rs$-walk, where the length $l \equiv 1$ (mod 3), this algorithm will find it. Firstly, every walk in $D$ has a correspondent walk in the auxiliary digraph because if you can go from a vertex $v$ to a vertex $u$ on $D$, you can go from a vertex of the form $(v,i), i \in \{0,1,2\}$ to a vertex of the form $(u,(i+1)\%3)$ in the auxiliary digraph. If you ignore the second element, you will have a walk that can be easily converted to the walk in $D$. If a walk in $D$ goes through an arc more than one time in different manners, meaning that, when you go through this arc, the length of the current walk is different from the previous times, this walk is transformed into a path on the auxiliary digraph because the ends of the correspondent's arcs of this arc in the auxiliary digraph will be different in the two mentioned steps of the walk. It is important to notice that a walk in $D$ that goes through the same arc, in the same manner, more than one time is irrelevant for our goal because the walk without the loop and the walk will have the same result with respect to the length mod 3. By that, all the walks we are interested in are transformed into paths in the auxiliary graph. Therefore, you can have the shortest $rs$-path from $(r,0) \to (s,1)$, on the auxiliary graph, which is actually the shortest $rs$-walk on $D$ with length $l \equiv 1$ (mod 3), by running a Breadth-First-Search on the auxiliary digraph with the mentioned arguments.
 
-  Finally, to get the walk in $D$, the function Relabeling($p_{\textnormal{aux}}$) receives a path on the auxiliary digraph and relabel all the vertices and arcs to match with the original graph. If a vertex has form $(v,i), i \in \{0,1,2\}$, it will be relabeled to $v$. An edge from $((v,i),(u,j)), i \in \{0,1,2\}, j \in \{0,1,2\}$, will be relabeled to $(v,u)$. This will make sure the $rs$-path is the according $rs$-walk in the original graph.
+  Finally, to get the walk in $D$, the function Relabeling($p_{\textnormal{aux}}$) receives a path on the auxiliary digraph and relabel all the vertices and arcs to match with the original graph. If a vertex has form $(v,i), i \in \{0,1,2\}$, it will be relabeled to $v$. An edge from $((v,i),(u,j)), i \in \{0,1,2\}, j \in \{0,1,2\}$, will be relabeled to $(v,u)$. This will ensure that the $rs$-path is the according $rs$-walk in the original graph.
 
 \end{solution}
 
 
 \begin{solution}
-  First, it is impossible to have both objects at the same time. If you have a matching that saturates $A$, you can build a set of pairs $(a,b), a \in A$, $b \in B$ and $a$ is a neighbor of $b$, such that every element of a pair is distinct from every other element of every other pair. Therefore, if there is a matching that saturates $A$, the inequality $|S| \leq |N (S)|$ holds for every $S \subseteq A$. The following algorithm solves the problem.
+  First, it is impossible to have both objects at the same time. If you have a matching that saturates $A$, you have $|A|$ different edges, one from each element in $A$ to a different element in $B$. Therefore, if there is a matching that saturates $A$, the inequality $|S| \leq |N (S)|$ holds for every $S \subseteq A$ because every $S \subseteq A$ has at least $|S|$ elements in $B$ that are neighbors of $S$. Also, if you have a subset $S \subseteq A$ such that $|S| > |N (S)|$ you can not have a matching that saturates $A$ because there is a vertex $v$ in $S$ such that $v$ is not an end of any edge on a maximum matching of $G$. This is easy to see because you can not have a matching that saturates $S$ if you have fewer neighbors of $S$ than $|S|$. If you can not have a matching that saturates $S$, you can not have a matching that saturates $A$.  
+  
+  The following algorithm solves the problem.
 
+  
   \begin{algorithm}
     \caption{Matching-or-Hall-Set ($G, (A, B)$)}\label{mh}
     \begin{algorithmic}[1]
@@ -139,39 +144,65 @@ By the arguments shown, $H_{1}^{\textnormal{min}} = H_{2}^{\textnormal{min}}$.
         \State \Return $M$ 
       \EndIf
 
+      \State $S \coloneqq \emptyset$\Comment{S will be the subset $S \subseteq A$ such that $|S| > |N (S)|$}
+
       \For{each $v \in A$}
-        \If{$v \notin M$} \Comment{this can be done in constant time by using an auxiliary array}%true because you can do in O(E) going through all edges and see the vertices and mark on an array if the vertex is in M
-          \State $S \gets \emptyset$ \Comment{S will be the subset described in the question}
-
-          \State $\pi, d \gets \textnormal{Breadth-First-Search}(G,v)$
-
-          \For{each $u \in V(G)$}
-            \If{(d[u] $< +\infty$) and ($u \in A$)}
-              \State $S \gets S \cup u$
-            \EndIf
-          \EndFor
-            \State \Return $S$
+        \If{$v \notin K$} \Comment{this can be done in constant time by using an auxiliary array}%true because you can do in O(E) going through all edges and see the vertices and mark on an array if the vertex is in M
+          \State $S \gets S \cup v$ 
 
         \EndIf
       \EndFor
+      \State \Return $S$
 
-        
     \end{algorithmic}
   \end{algorithm}
+
+  By corollary 20, the call of Konig's algorithm with a bipartite graph returns $(M,K)$, where $M$ is a maximum matching of $G$ and $K$ is a minimum vertex cover of $G$, and $|M| = |K|$.
+
+  The algorithm \ref{mh} runs Konig's algorithm, checks if $M$ saturates $A$, and returns $M$ if the verification is true. Otherwise, we know that no matching of $G$ saturates $A$, and we need to return a subset $S \subseteq A$ such that $|S| > |N (S)|$. In algorithm \ref{mh} $S \coloneqq \{a \in A: a \notin K\}$. 
   
-  By corollary 20, the call of Konig's algorithm with a bipartite graph returns $(M,K)$, where $M$ is a maximum matching of $G$ and $K$ is a minimum vertex cover of $G$. It is correct because if the connected component always go back to the set A if it goes to the set B, because v and the subsequent are only connected to vertices on the matching, therefore this vertex is connected to a vertex in A.
+  First, $S$ is a subset of $A$. Second, $N(S)$ is the set of all elements $b \in B$ such that $b \in K$. If $b \in B $ and $b \in K$, $b$ has at least one neighbor that is not in $K$, otherwise $K$ would not be a minimum vertex cover because you could remove $b$ from $K$, and it would still be a vertex cover, what is a contradiction. Therefore, $b$ has a neighbor in $S$ and, by definition, is in $N(S)$. Finally, now that we know $N(S)$, we will prove that $|S| > |N (S)|$. An important property of this setup is that $|M| = |K|$ and $|M| < |A|$, thus $|K| < |A|$. Let $K_A \coloneqq \{a \in A: a \in K\}$ and $K_B \coloneqq \{b \in B: b \in K\}$. $K_A$ and $K_B$ are disjoint so we have $|K_A| + |K_B| < |A|$. Working on that, trying to have an inequality where one side is a subset of $A$, $|K_B| < |A| - |K_A|$. Because $K_A \subseteq A$, $|A| - |K_A| = |A \setminus K_A|$. Knowing that $K_B = N(S)$ and $A \setminus K_A = S$, it is proved that $|N (S)| < |S|$.
 
-  The algorithm above runs Konig's algorithm, check if $M$ saturates $A$ and returns M if the verification is true. If it is not, the algorithm finds a vertex that it is not an end of any edge on $M$, and return the component (connected). To prove its correctness, I will take into account that, if $M$ does not saturate $A$, given that $M$ is a maximum matching of $G$, then no other matching saturates $M$. By that, if the algorithm does not return the matching in line 3, I should be able to return a subset $S \subseteq A$ such that $|S| > |N (S)|$.  
+  Regarding the time analysis, in line 1, we run Konig's algorithm, which was analyzed in class. Lines 2, 3, and 4 can be done in constant time if you store the size of the set (in the worst case, the IF verification is linear on the number of elements of the sets). The FOR loop on line 5 runs  $|A|$ times, and the IF on line 6 can be done in constant time by using an auxiliary boolean array that stores whether a vertex $v$ is in $K$ or not (it costs linear time on $|V(G)|$ to build the array plus linear time on $|K|$ to fill the array). Concluding, the time of Konig's algorithm defines the time of the algorithm \ref{mh}, $(O (|V(G)|(|V(G)| + |E(G)|)))$.
 
-  If $M$ does not saturate $A$, there is at least on vertex $v$ that there is no edge in $M$ with an end in $v$. On line 6, when we find such $v$ we will run a Bradth-First-Search and after that we build a set with all the vertices that we can reach from $v$ and that lies on $A$. This set is a subset $S \subseteq A$ such that $|S| > |N (S)|$. To prove why that is true we need to go through some cases:
-  \begin{itemize}
-    \item If the vertex $v$ does not have a neighbor the only element in $S$ will be $v$ and then $S$ satisfy the conditions.
-    \item If $v$ has a neighbor $u$ (which lies in $B$ because it is bipartite graph), $u$ will have at least one neighbor $w$ (which lies in $A$ because it is bipartite graph) because otherwise the matching could have another edge, but this is a contradiction because it is a maximum matching of $G$. It is clear that ${w,u} \in M$.
-  \end{itemize} 
+  % \begin{algorithm}
+  %   \caption{Matching-or-Hall-Set ($G, (A, B)$)}\label{mh}
+  %   \begin{algorithmic}[1]
+  %     \State $M,K \gets$ Konig's-Algorithm ($G,(A,B)$)
+  %     \If{$|M|$ = $|A|$}
+  %       \State \Return $M$ 
+  %     \EndIf
+
+  %     \For{each $v \in A$}
+  %       \If{$v \notin K$} \Comment{this can be done in constant time by using an auxiliary array}%true because you can do in O(E) going through all edges and see the vertices and mark on an array if the vertex is in M
+  %         \State $S \gets \emptyset$ \Comment{S will be the subset described in the question}
+
+  %         \State $\pi, d \gets \textnormal{Breadth-First-Search}(G,v)$
+
+  %         \For{each $u \in V(G)$}
+  %           \If{(d[u] $< +\infty$) and ($u \in A$)}
+  %             \State $S \gets S \cup u$
+  %           \EndIf
+  %         \EndFor
+  %           \State Change the return statement
+  %           \State \Return $S$
+
+  %       \EndIf
+  %     \EndFor
+
+  %   \end{algorithmic}
+  % \end{algorithm}
+
+
+  % If $M$ does not saturate $A$, there is at least on vertex $v$ that there is no edge in $M$ with an end in $v$. On line 6, when we find such $v$ we will run a Bradth-First-Search and after that we build a set with all the vertices that we can reach from $v$ and that lies on $A$. This set is a subset $S \subseteq A$ such that $|S| > |N (S)|$. To prove why that is true we need to go through some cases:
+  % \begin{itemize}
+  %   \item If the vertex $v$ does not have a neighbor the only element in $S$ will be $v$ and then $S$ satisfy the conditions.
+  %   \item If $v$ has a neighbor $u$ (which lies in $B$ because it is bipartite graph), $u$ will have at least one neighbor $w$ (which lies in $A$ because it is bipartite graph) because otherwise the matching could have another edge, but this is a contradiction because it is a maximum matching of $G$. It is clear that ${w,u} \in M$.
+  % \end{itemize} 
+
+  % Maybe a good approach is to prove by stating that all the vertices on B have a matching and at least $v$ does not have a matching. Prove that the scenario where a vertex in B does not have matching does not exist.
   
-   If $v$ has a neighbor $u$ (which lies in $B$ because it is bipartite graph), $u$ will have at least one neighbor $w$ (which lies in $A$ because it is bipartite graph) because otherwise the matching could have another edge, but this is a contradiction because it is a maximum matching of $G$. It is clear that ${w,u} \in M$. If $w$ does not have a neighbor  This  it will go back to the set A because if it was not the case the matching would not be the maximum matching.
-
-  On line 1 we run Konig's algorithm that was analyzed in class. Lines 2, 3 and 4 can be done in linear time using an array to mark each vertex in $A$ that the arcs on the matching has an end and then go through this array to verify $M$ saturates $A$. The FOR loop on line 5 runs at most $|A|$ times, but the IF on line 6 is true only one time, because if it is true, latter will have a RETURN at line 14. Given that, we will run one BFS $(O (|V(G)| + |E(G)|))$ and the FOR at line 9 will run one time $(O (|V(G)|))$. Thus, the time of Konig's algorithm defines the time of the algorithm \ref{mh}, $(O (|V(G)|(|V(G)| + |E(G)|)))$.
+  %  If $v$ has a neighbor $u$ (which lies in $B$ because it is bipartite graph), $u$ will have at least one neighbor $w$ (which lies in $A$ because it is bipartite graph) because otherwise the matching could have another edge, but this is a contradiction because it is a maximum matching of $G$. It is clear that ${w,u} \in M$. If $w$ does not have a neighbor  This  it will go back to the set A because if it was not the case the matching would not be the maximum matching.
 
 \end{solution}
 
