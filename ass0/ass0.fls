@@ -1,9 +1,9 @@
-PWD /home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1
+PWD /home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass0
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass0.tex
+INPUT /home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass0/ass0.tex
 OUTPUT ass0.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/amscls/amsart.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/amscls/amsart.cls

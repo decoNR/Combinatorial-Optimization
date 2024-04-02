@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1711936481 "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass0.tex" "ass0.pdf" "ass0" 1711936481
+["pdflatex"] 1712023278 "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass0/ass0.tex" "ass0.pdf" "ass0" 1712023278
   "/etc/texmf/web2c/texmf.cnf" 1709902086 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass1/ass0.tex" 1711936474 17599 6a084cc6f4bd47c363d56b6ab44bbf5a ""
+  "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/ass0/ass0.tex" 1712023278 18167 4d4c8af5375f207a839463170d9093bc ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -142,8 +142,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1709902100 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710526460 2801064 aa22a8da880a9c7c05efb7e0fe53274c ""
-  "ass0.aux" 1711936481 867 d3b4502d6ce316457399d1c2c1f6a56c "pdflatex"
-  "ass0.tex" 1711936474 17599 6a084cc6f4bd47c363d56b6ab44bbf5a ""
+  "ass0.aux" 1712023278 867 d3b4502d6ce316457399d1c2c1f6a56c "pdflatex"
+  "ass0.tex" 1712023278 18167 4d4c8af5375f207a839463170d9093bc ""
   (generated)
   "ass0.aux"
   "ass0.log"
