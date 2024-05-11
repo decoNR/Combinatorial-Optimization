@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1711380669 "/home/andre/Documentos/USP/usp/7_sem/ot comb/template/main.tex" "main.pdf" "main" 1711380670
+["pdflatex"] 1715114418 "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/template/main.tex" "main.pdf" "main" 1715114418
   "/etc/texmf/web2c/texmf.cnf" 1709902086 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andre/Documentos/USP/usp/7_sem/ot comb/template/main.tex" 1711380407 691 72db521450cead92c89583cd3c615adf ""
+  "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/template/main.tex" 1711380407 691 72db521450cead92c89583cd3c615adf ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm" 1246382020 996 a18840b13b499c08ac2de96a99eda4bc ""
@@ -121,7 +121,7 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1709902100 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710526460 2801064 aa22a8da880a9c7c05efb7e0fe53274c ""
-  "main.aux" 1711380669 254 0dadbce6ed9dc41fd7a3ad91240aeda2 "pdflatex"
+  "main.aux" 1715114418 254 0dadbce6ed9dc41fd7a3ad91240aeda2 "pdflatex"
   "main.tex" 1711380407 691 72db521450cead92c89583cd3c615adf ""
   (generated)
   "main.aux"

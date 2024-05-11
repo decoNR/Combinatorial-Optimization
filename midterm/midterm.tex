@@ -1,0 +1,107 @@
+\documentclass[11pt,leqno,final]{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{etoolbox}
+\usepackage{background}
+
+%my stuff
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{notation}
+
+
+%--------------------------------
+
+\SetBgContents{\rule{\paperwidth}{0.8pt}}
+\SetBgColor{gray!50}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgScale{1}
+
+\theoremstyle{definition}
+\newtheorem{solution}{Solution}
+\AtEndEnvironment{solution}{\clearpage}
+
+\begin{document}
+% DO NOT WASTE SPACE by copying the exercise statement.
+% The grader already knows which exercise you are solving from the
+% solution counter.
+%---------------------------------------------------
+
+\begin{solution}
+\begin{alignat*}{3}
+    \text{Minimize} \quad
+    & \iprodt{c}{x} &
+    \\[0pt]
+    \text{subject to}\quad
+    & x \in \set{0,1}^A, &&
+    \\[0pt]
+    & x\paren[\big]{\deltaout(i)} = 1, &&
+    \qquad \text{for each }i \in V,
+    \\[0pt]
+    & x\paren[\big]{\deltain(i)} = 1, &&
+    \qquad \text{for each }i \in V,
+    \\[0pt]
+    & u \in \Integers^{V \drop \set{r}}, &&
+    \\[0pt]
+    & u_i - u_j + n x_{ij} \leq n-1, &&
+    \qquad \text{for each }ij \in A\text{ disjoint from }\set{r}.
+  \end{alignat*}
+
+\end{solution}
+
+
+\begin{solution}
+  
+
+\end{solution}
+
+
+\begin{solution}
+  First, it is impossible to have both objects at the same time. If you have a matching that saturates $A$, you have $|A|$ different edges, one from each element in $A$ to a different element in $B$. Therefore, if there is a matching that saturates $A$, the inequality $|S| \leq |N (S)|$ holds for every $S \subseteq A$ because every $S \subseteq A$ has at least $|S|$ elements in $B$ that are neighbors of $S$. Also, if you have a subset $S \subseteq A$ such that $|S| > |N (S)|$ you can not have a matching that saturates $A$ because there is a vertex $v$ in $S$ such that $v$ is not an end of any edge on a maximum matching of $G$. This is easy to see because you can not have a matching that saturates $S$ if you have fewer neighbors of $S$ than $|S|$. If you can not have a matching that saturates $S$, you can not have a matching that saturates $A$.  
+  
+  The following algorithm solves the problem.
+
+  
+  \begin{algorithm}
+    \caption{Matching-or-Hall-Set ($G, (A, B)$)}\label{mh}
+    \begin{algorithmic}[1]
+      \State $M,K \gets$ Konig's-Algorithm ($G,(A,B)$)
+      \If{$|M|$ = $|A|$}
+        \State \Return $M$ 
+      \EndIf
+
+      \State $S \coloneqq \emptyset$\Comment{S will be the subset $S \subseteq A$ such that $|S| > |N (S)|$}
+
+      \For{each $v \in A$}
+        \If{$v \notin K$} \Comment{this can be done in constant time by using an auxiliary array}%true because you can do in O(E) going through all edges and see the vertices and mark on an array if the vertex is in M
+          \State $S \gets S \cup v$ 
+
+        \EndIf
+      \EndFor
+      \State \Return $S$
+
+    \end{algorithmic}
+  \end{algorithm}
+
+  By corollary 20, the call of Konig's algorithm with a bipartite graph returns $(M,K)$, where $M$ is a maximum matching of $G$ and $K$ is a minimum vertex cover of $G$, and $|M| = |K|$.
+
+  The algorithm \ref{mh} runs Konig's algorithm, checks if $M$ saturates $A$, and returns $M$ if the verification is true. Otherwise, we know that no matching of $G$ saturates $A$, and we need to return a subset $S \subseteq A$ such that $|S| > |N (S)|$. In algorithm \ref{mh} $S \coloneqq \{a \in A: a \notin K\}$.
+  
+  First, $S$ is a subset of $A$. Second, $N(S)$ is the set of all elements $b \in B$ such that $b \in K$. If $b \in B $ and $b \in K$, $b$ has at least one neighbor that is not in $K$, otherwise $K$ would not be a minimum vertex cover because you could remove $b$ from $K$, and it would still be a vertex cover, what is a contradiction. Therefore, $b$ has a neighbor in $S$ and, by definition, is in $N(S)$. Finally, now that we know $N(S)$, we will prove that $|S| > |N (S)|$. An important property of this setup is that $|M| = |K|$ and $|M| < |A|$, thus $|K| < |A|$. Let $K_A \coloneqq \{a \in A: a \in K\}$ and $K_B \coloneqq \{b \in B: b \in K\}$. $K_A$ and $K_B$ are disjoint so we have $|K_A| + |K_B| < |A|$. Working on that, trying to have an inequality where one side is a subset of $A$, $|K_B| < |A| - |K_A|$. Because $K_A \subseteq A$, $|A| - |K_A| = |A \setminus K_A|$. Knowing that $K_B = N(S)$ and $A \setminus K_A = S$, it is proved that $|N (S)| < |S|$.
+
+  Regarding the time analysis, in line 1, we run Konig's algorithm, which was analyzed in class. Lines 2, 3, and 4 can be done in constant time if you store the size of the set (in the worst case, the IF verification is linear on the number of elements of the sets). The FOR loop on line 5 runs  $|A|$ times, and the IF on line 6 can be done in constant time by using an auxiliary boolean array that stores whether a vertex $v$ is in $K$ or not (it costs linear time on $|V(G)|$ to build the array plus linear time on $|K|$ to fill the array). Concluding, the time of Konig's algorithm defines the time of the algorithm \ref{mh}, $(O (|V(G)|(|V(G)| + |E(G)|)))$.
+
+  
+\end{solution}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}
