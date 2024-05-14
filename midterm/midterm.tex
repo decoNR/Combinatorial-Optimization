@@ -8,6 +8,7 @@
 \usepackage{algpseudocode}
 \usepackage{mathtools}
 \usepackage{amssymb}
+\usepackage{bbm}
 \usepackage{notation}
 
 
@@ -30,30 +31,41 @@
 %---------------------------------------------------
 
 \begin{solution}
+Below is the integer program requested.  
+
 \begin{alignat*}{3}
-    \text{Minimize} \quad
-    & \iprodt{c}{x} &
-    \\[0pt]
-    \text{subject to}\quad
-    & x \in \set{0,1}^A, &&
-    \\[0pt]
-    & x\paren[\big]{\deltaout(i)} = 1, &&
-    \qquad \text{for each }i \in V,
-    \\[0pt]
-    & x\paren[\big]{\deltain(i)} = 1, &&
-    \qquad \text{for each }i \in V,
-    \\[0pt]
-    & u \in \Integers^{V \drop \set{r}}, &&
-    \\[0pt]
-    & u_i - u_j + n x_{ij} \leq n-1, &&
-    \qquad \text{for each }ij \in A\text{ disjoint from }\set{r}.
-  \end{alignat*}
+  \text{Minimize} \quad
+  % & \iprodt{c}{x} &
+  & y &
+  \\[0pt]
+  \text{subject to}\quad
+  & c \in \set{0,1}^{V \times V} ??????XXXXX, y \in \Integers_+ &&
+  \\[0pt]
+  % & x\paren[\big]{\deltaout(i)} = 1, &&
+  % \qquad \text{for each }i \in V,
+  % \\[0pt]
+  % & u \in \Integers^{V \drop \set{r}}, &&
+  % \\[0pt]
+  & \sum_{i=1}^{n} c_{iv} = 1, &&
+  \qquad \text{for each }v \in V.
+  \\[0pt]
+  & c_{iu} + c_{iv} \leq 1, &&
+  \qquad \text{for each } \{u,v\} \in E \text{ and } i \in V,
+  \\[0pt]
+  & y \geq \sum_{i=1}^{n} i c_{iv}, &&
+  \qquad \text{for each }v \in V.
+\end{alignat*}
+
+The above formulation uses $n^2$ variables where each one is associated with a vertex $v$ and a color $c$, and 1 varible $y$, which is used to get the minimum-size coloring of $G$. If $v$ has color $c$, the correspondent variable will be equal to 1, otherwise it will be 0. 
+The first set of constraints ---- has $n$ equalities and enforces that each vertex has one color. The second set of constraints ---- has $n.m$ inequalities and guarantee that there is no neighboring vertices with the same color. Finally, the last set of constraints ---- has $n$ inequalities and exists to extract the answer. For each inequality in this last set, exactly one variable will be equal to 1 and all the others equal to 0 (one vertex can have only one color). By that, the result of the sum will be $i$, where $i$ is the index associated with the variable $c{i,v}$, meaning that the vertex $v$ has color $i$. Given that, $y$ will be greater or equal to the maximum index $j$ among all colors utilized. Since we are minimizing $y$, the best answer will get lower index colors, and thus $y$ will be equal to the minimum number of colors  possible to color $G$.
 
 \end{solution}
 
 
 \begin{solution}
-  
+Supose $B_D$ is not totally unimodular. Then, there are $X \subset V$ and $Y \subset A$ such that $|X| = |Y|$ and $\text{det} \paren{B_D[X, Y]} \notin \{0, -1, +1\}$. Among all other pairs $\paren{X,Y}$, choose the one that minimizes the size of $X$ and $Y$. If $|X| = |Y| = 1$, $\text{det} \paren{B_D[X, Y]} \in \{0, -1, +1\}$ because by definition all the entries of $B_D$ are an element of $\{0, -1, +1\}$. Hence, $|X| = |Y| \geq 2$. If some column of $B_D = 0$, then $\text{det}\paren{B_D[X, Y]} = 0$. Hence, each column of $B_D[X, Y]$ has at least one entry that is an element of $\{-1, +1\}$. 
+If some column has exactly one 1 or one -1, say at entry $\paren{a,b} \in X \times Y$, then, by Laplace expansion of the determinant, we have $\text{det} \paren{B_D[X, Y]} = \pm \text{det}\paren{B_D[X \setminus \{a\}, Y \setminus \{b\}]} \in \{0, -1, +1\}$. Hence, every column of $B_D[X, Y]$ has exactly one entry equal to -1 and one entry equal to 1. Given that, $\paren{B_D[X \setminus \{a\}, Y \setminus \{b\}]}^{\transp}\mathbbm{1} = 0$, where $\mathbbm{1}$ is the vector where all entries are equal to 1. Hence, $\paren{\text{det}\paren{B_D[X, Y]}}^{\transp} = 0$, and therefore, $\text{det}\paren{B_D[X, Y]} = 0$. Thus, $B_D$ is totally unimodular.
+
 
 \end{solution}
 
@@ -67,7 +79,7 @@
   \begin{algorithm}
     \caption{Matching-or-Hall-Set ($G, (A, B)$)}\label{mh}
     \begin{algorithmic}[1]
-      \State $M,K \gets$ Konig's-Algorithm ($G,(A,B)$)
+      \State $\paren{M,K} \gets$ Bip-Matching-and-Vertex-Cover ($G,(A,B)$)
       \If{$|M|$ = $|A|$}
         \State \Return $M$ 
       \EndIf
@@ -76,7 +88,7 @@
 
       \For{each $v \in A$}
         \If{$v \notin K$} \Comment{this can be done in constant time by using an auxiliary array}%true because you can do in O(E) going through all edges and see the vertices and mark on an array if the vertex is in M
-          \State $S \gets S \cup v$ 
+          \State $S \gets S \cup \{v\}$ 
 
         \EndIf
       \EndFor
@@ -85,22 +97,61 @@
     \end{algorithmic}
   \end{algorithm}
 
-  By corollary 20, the call of Konig's algorithm with a bipartite graph returns $(M,K)$, where $M$ is a maximum matching of $G$ and $K$ is a minimum vertex cover of $G$, and $|M| = |K|$.
+   The call to Bip-Matching-and-Vertex-Cover algorithm with returns $(M,K)$, where $M$ is a matching of $G$ and $K$ is a vertex cover of $G$, and $|M| = |K|$. By corollary 21, follow that $M$ is a maximum matching of $G$ and $K$ is a minimum vertex cover of $G$.
 
-  The algorithm \ref{mh} runs Konig's algorithm, checks if $M$ saturates $A$, and returns $M$ if the verification is true. Otherwise, we know that no matching of $G$ saturates $A$, and we need to return a subset $S \subseteq A$ such that $|S| > |N (S)|$. In algorithm \ref{mh} $S \coloneqq \{a \in A: a \notin K\}$.
+  Algorithm \ref{mh} runs Bip-Matching-and-Vertex-Cover algorithm, checks if $M$ saturates $A$, and returns $M$ if the verification is true. Otherwise, we know that no matching of $G$ saturates $A$, and we need to return a subset $S \subseteq A$ such that $|S| > |N (S)|$. In Algorithm \ref{mh}, the subset $S$ is define as $S \coloneqq \{a \in A: a \notin K\}$.
   
-  First, $S$ is a subset of $A$. Second, $N(S)$ is the set of all elements $b \in B$ such that $b \in K$. If $b \in B $ and $b \in K$, $b$ has at least one neighbor that is not in $K$, otherwise $K$ would not be a minimum vertex cover because you could remove $b$ from $K$, and it would still be a vertex cover, what is a contradiction. Therefore, $b$ has a neighbor in $S$ and, by definition, is in $N(S)$. Finally, now that we know $N(S)$, we will prove that $|S| > |N (S)|$. An important property of this setup is that $|M| = |K|$ and $|M| < |A|$, thus $|K| < |A|$. Let $K_A \coloneqq \{a \in A: a \in K\}$ and $K_B \coloneqq \{b \in B: b \in K\}$. $K_A$ and $K_B$ are disjoint so we have $|K_A| + |K_B| < |A|$. Working on that, trying to have an inequality where one side is a subset of $A$, $|K_B| < |A| - |K_A|$. Because $K_A \subseteq A$, $|A| - |K_A| = |A \setminus K_A|$. Knowing that $K_B = N(S)$ and $A \setminus K_A = S$, it is proved that $|N (S)| < |S|$.
+  First, $S$ is a subset of $A$. Second, $N(S)$ is the set of all elements $b \in B$ such that $b \in K$. If $b \in B $ and $b \in K$, then $b$ has at least one neighbor that is not in $K$, otherwise $K$ would not be a minimum vertex cover because you could remove $b$ from $K$, and it would still be a vertex cover, which is a contradiction. Therefore, $b$ has a neighbor in $S$ and, by definition, is in $N(S)$. 
+  
+  Finally, we will prove that $|S| > |N (S)|$. An important property of this setup is that $|M| = |K|$ and $|M| < |A|$, thus $|K| < |A|$. Set $K_A \coloneqq \{a \in A: a \in K\}$ and $K_B \coloneqq \{b \in B: b \in K\}$. Given that $K_A$ and $K_B$ are disjoint, we have $|K_A| + |K_B| < |A|$. Working on that, trying to have an inequality where one side is a subset of $A$, we have $|K_B| < |A| - |K_A|$. Because $K_A \subseteq A$, then $|A| - |K_A| = |A \setminus K_A|$. Knowing that $K_B =?????? N(S)$ and $A \setminus K_A = S$, it is proved that $|N (S)| < |S|$.
 
-  Regarding the time analysis, in line 1, we run Konig's algorithm, which was analyzed in class. Lines 2, 3, and 4 can be done in constant time if you store the size of the set (in the worst case, the IF verification is linear on the number of elements of the sets). The FOR loop on line 5 runs  $|A|$ times, and the IF on line 6 can be done in constant time by using an auxiliary boolean array that stores whether a vertex $v$ is in $K$ or not (it costs linear time on $|V(G)|$ to build the array plus linear time on $|K|$ to fill the array). Concluding, the time of Konig's algorithm defines the time of the algorithm \ref{mh}, $(O (|V(G)|(|V(G)| + |E(G)|)))$.
+  Regarding the time analysis, lines 2, 3, and 4 can be done in constant time if you store the size of the set (in the worst case, the IF verification is linear on the number of elements of the sets). The FOR loop on line 5 runs  $|A|$ times, and the IF on line 6 can be done in constant time by using an auxiliary boolean array that stores whether a vertex $v$ is in $K$ or not (it costs linear time on $|V(G)|$ to build the array plus linear time on $|K|$ to fill the array). Concluding, besides the running time of Bip-Matching-and-Vertex-Cover, Algorithm \ref{mh} runs in time $O (n + m)$ and does not run any graph traversal algorithm.
 
   
 \end{solution}
 
 \begin{solution}
+Set $C$ to be the set of all convex combinations of points of $X$. To prove that $\text{conv}\paren{X} = C$, I will prove that $\text{conv}\paren{X} \subseteq C$ and that $C \subseteq \text{conv}\paren{X}$. 
+
+To prove that $\text{conv}\paren{X} \subseteq C$, I will prove that $X \subseteq C$ and it is convex. Given that $\text{conv}\paren{X}$ is the intersection of all convex subsets of $\Reals^{V}$ that contain $X$, if $X \subseteq C$ and $C$ is convex, then $\text{conv}\paren{X} \subseteq C$. 
+
+First, a point $y$ is convex combination of points of $X_i ????$ if there is $\lambda\in \Reals_{+}^{\text{I}}$ such that $\mathbbm{1} \lambda = 1$ and $y = \sum_{i \in \text{I}} \lambda_{i}x_{i}$. Given this definition is easy to see that every $x \in X$ is a convex combination of points of $X$ (choosing $\lambda_{i} = 1$ the sum will be equal to $x_{i}$). 
+
+Finally, let $y_1 \coloneqq \sum_{i \in \text{I}} \alpha_{i}x_{i}$ and $y_2 \coloneqq \sum_{i \in \text{I}} \beta_{i}x_{i}$ be arbitrary convex combinations of points of $X$ and let $\lambda \in [0,1]$. We will prove that $(1 - \lambda) y_{1} + \lambda y_{2}$ is in $C$. 
+
+$$(1 - \lambda) y_{1} + \lambda y_{2} = \paren{\sum_{i \in \text{I}} (1 - \lambda)\alpha_{i}x_{i}} + \paren{\sum_{i \in \text{I}} \lambda\beta_{i}x_{i}} $$
+$$(1 - \lambda) y_{1} + \lambda y_{2} = \sum_{i \in \text{I}} (1 - \lambda)\alpha_{i}x_{i} +  \lambda\beta_{i}x_{i} $$
+$$(1 - \lambda) y_{1} + \lambda y_{2} = \sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}}x_{i} $$
+
+If $\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = 1$, then $(1 - \lambda) y_{1} + \lambda y_{2}$ is a convex combination of points of $X$.
+
+$$\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = \sum_{i \in \text{I}} \paren{\alpha_{i} - \lambda\alpha_{i} +  \lambda\beta_{i}}$$
+$$\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = \sum_{i \in \text{I}} \alpha_{i} - \sum_{i \in \text{I}} \lambda\alpha_{i} +  \sum_{i \in \text{I}}\lambda\beta_{i}$$
+$$\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = 1 - \lambda + \lambda = 1$$
+
+Thus, we proved that $\text{conv}\paren{X} \subseteq C$.
+
+To prove that $C \subseteq \text{conv}\paren{X}$, I will prove that any convex combination of points of $X$ is a point that is in every convex subset of $\Reals^{V}$ that contain $X$, and therefore is in $\text{conv}\paren{X}$.
+
+By defintion of convex, $y_{1} \coloneqq \lambda_{1}x_{1} + (1 - \lambda_{1})x_{2}$, where $x_{1},??? x_{2} \in X$ and $\lambda_{1} \in [0,1]$, is in conv$(X)$. Also, $y_{2} \coloneqq \lambda_{2}y_{1} + (1 - \lambda_{1})x_{3}$, where $x_{3} \in X$ and $\lambda_{2} \in [0,1]$, is in conv$(X)$ because $y_{1} and x_{3}$ are points in conv$(X)$. Doing it recursively, $$y \coloneqq \paren{\prod_{k \in \text{I}} \lambda_{k}} x_{j} + \paren{\sum_{i \in \text{I}\setminus \{j\}} \paren{\prod_{k \in \text{I}} \lambda_{k}} \paren{1 - \lambda{i}} x_{i}} + \paren{1 - \lambda{i}} x_{l}$$ is in conv$(X)$ ???????? ta foda a notacao.
+
+First, $$\paren{\prod_{k \in \text{I}} \lambda_{k}}+ \paren{\sum_{i \in \text{I}\setminus \{j\}} \paren{\prod_{k \in \text{I}} \lambda_{k}} \paren{1 - \lambda{i}}} + \paren{1 - \lambda{i}} = 1$$
+
+Finally, any convex combination $c \coloneqq \sum_{i \in \text{I}} \lambda_{i} x_{i}$ can be written as ----------. This follows because it is possible to build the coeficients on -------- based on $lambda_{i}$. Choose an arbitrary $x_{1} \in X$ with coeficient $\lambda_{1} > 0$ and let $(1-\lambda_{k})?? \coloneqq \lambda_{i}$. If $\lambda_{i} = 1$, then is trivial. If it $\lambda_{i} < 1$, then choose an arbitrary $x_{2} \in X$ with coeficient $\lambda_{2} > 0$
+
+
+$\sum_{j \in \text{I} \setminus \{i\}} \lambda_{j} > 0$
+
+
 
 \end{solution}
 
 \begin{solution}
+To prove that 
+
+The edges of ${b(b(H))}^{\uparrow}$ are all sets of vertices that have at least one vertex of each minimal vertex cover. Given that for a vertex cover you need at least one vertex that is and end of each hyperedge of the graph, you can use each vertex of the same hyperedge to get distincts minimal vertex covers. Also, it is important to state that every minimal vertex cover will have at least one of those vertices, otherwise it would not be a vertex cover. By that, every hyperedge of $H$ is in ${b(b(H))}^{\uparrow}$. By the definition of the upperarrow symbol $H^{\uparrow} \subset {b(b(H))}^{\uparrow}$.
+
+Edges of $H^{\uparrow}$ are all sets of vertices that contains at least one hyperedge of $H$. Then, if a set of vertices is not in $H^{\uparrow}$, it means that is a set that does not contain any hyperedge of $H$. Since there is a minimal vertex cover with each vertex of each hyperedge of $H$, 
 
 \end{solution}
 

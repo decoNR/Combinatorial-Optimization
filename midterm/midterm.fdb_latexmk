@@ -1,7 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1715348950 "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/midterm/midterm.tex" "midterm.pdf" "midterm" 1715348950
+["pdflatex"] 1715663553 "/home/andre/Documentos/USP/usp/7_sem/ot_comb/Combinatorial-Optimization/midterm/midterm.tex" "midterm.pdf" "midterm" 1715663553
   "/etc/texmf/web2c/texmf.cnf" 1709902086 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andre/Documentos/USP/usp/7_sem/Combinatorial-Optimization/midterm/midterm.tex" 1715348949 5182 112e050eaa80b0bcbbc8bd4fa79609c7 ""
+  "/home/andre/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk" 1715553388 7808 c1f78046858ac6941bd77d00dd8e3e3e ""
+  "/home/andre/Documentos/USP/usp/7_sem/ot_comb/Combinatorial-Optimization/midterm/midterm.tex" 1715663553 12609 39b7ed395242c23cdc70a66c221110d3 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -12,6 +13,9 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm" 1246382020 908 2921f8a10601f252058503cc6570e581 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1246382020 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1246382020 940 228d6584342e91276bf566bcf9716b83 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/bbm/bbm10.tfm" 1227036886 560 39fd35b5e4a6aca3672660cc548ba860 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/bbm/bbm6.tfm" 1227036886 560 4c5ff0e6c23877f3f630ae9d8ef92c6e ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/bbm/bbm8.tfm" 1227036886 560 2e80f8a1cb59527f57d99bb5fccd0f3c ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1136768653 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm" 1136768653 1528 abec98dbc43e172678c11b3b9031252a ""
@@ -33,7 +37,6 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
-  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb" 1248133631 24420 52dbb8e8aa0069a1b987309557f8d303 ""
@@ -113,6 +116,8 @@
   "/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty" 1636758526 2444 926f379cc60fcf0c6e3fee2223b4370d ""
   "/usr/share/texlive/texmf-dist/tex/latex/background/background.sty" 1394061490 5593 3c5a676b1c4a9faee4a2a4d4a1b33300 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty" 1622581934 5157 f308c7c04889e16c588e78aa42599fae ""
+  "/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/bbm.sty" 1191314257 1644 1e0d54b051369c3f457872824cac219f ""
+  "/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd" 1191314257 2132 62f898e14cad3357133b5cbf57b61c0a ""
   "/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1579991033 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty" 1601931149 46845 3b58f70c6e861a13d927bff09d35ecbc ""
   "/usr/share/texlive/texmf-dist/tex/latex/everypage/everypage.sty" 1603054251 2337 781b78f572435553b0c730d036a6e4ee ""
@@ -147,8 +152,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1709902100 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710526460 2801064 aa22a8da880a9c7c05efb7e0fe53274c ""
-  "midterm.aux" 1715348950 545 26313370f5b0c1fce721121e09ba8f36 "pdflatex"
-  "midterm.tex" 1715348949 5182 112e050eaa80b0bcbbc8bd4fa79609c7 ""
+  "midterm.aux" 1715663553 545 26313370f5b0c1fce721121e09ba8f36 "pdflatex"
+  "midterm.tex" 1715663553 12609 39b7ed395242c23cdc70a66c221110d3 ""
   "notation.sty" 1715347890 8695 67ee0501fe2bf20ff9d164ff4ee6e445 ""
   (generated)
   "midterm.aux"
