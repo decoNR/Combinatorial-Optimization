@@ -39,7 +39,7 @@ Below is the integer program requested.
   & y &
   \\[0pt]
   \text{subject to}\quad
-  & c \in \set{0,1}^{V \times V} ??????XXXXX, y \in \Integers_+ &&
+  & c \in \set{0,1}^{[n] \times V}, y \in \Integers_+ &&
   \\[0pt]
   % & x\paren[\big]{\deltaout(i)} = 1, &&
   % \qquad \text{for each }i \in V,
@@ -47,24 +47,25 @@ Below is the integer program requested.
   % & u \in \Integers^{V \drop \set{r}}, &&
   % \\[0pt]
   & \sum_{i=1}^{n} c_{iv} = 1, &&
-  \qquad \text{for each }v \in V.
+  \qquad \text{for each }v \in V,
   \\[0pt]
-  & c_{iu} + c_{iv} \leq 1, &&
-  \qquad \text{for each } \{u,v\} \in E \text{ and } i \in V,
+  & c_{iu} + c_{iv} \leq 1 &&
+  \qquad \text{for each } \{u,v\} \in E \text{ and each } i \in [n],
   \\[0pt]
   & y \geq \sum_{i=1}^{n} i c_{iv}, &&
   \qquad \text{for each }v \in V.
 \end{alignat*}
 
-The above formulation uses $n^2$ variables where each one is associated with a vertex $v$ and a color $c$, and 1 varible $y$, which is used to get the minimum-size coloring of $G$. If $v$ has color $c$, the correspondent variable will be equal to 1, otherwise it will be 0. 
-The first set of constraints ---- has $n$ equalities and enforces that each vertex has one color. The second set of constraints ---- has $n.m$ inequalities and guarantee that there is no neighboring vertices with the same color. Finally, the last set of constraints ---- has $n$ inequalities and exists to extract the answer. For each inequality in this last set, exactly one variable will be equal to 1 and all the others equal to 0 (one vertex can have only one color). By that, the result of the sum will be $i$, where $i$ is the index associated with the variable $c{i,v}$, meaning that the vertex $v$ has color $i$. Given that, $y$ will be greater or equal to the maximum index $j$ among all colors utilized. Since we are minimizing $y$, the best answer will get lower index colors, and thus $y$ will be equal to the minimum number of colors  possible to color $G$.
+The above formulation uses $n^2$ variables where, each one is associated with a vertex $v$ and a color $c$. It also uses 1 variable $y$, which is used to get the minimum-size coloring of $G$. If $v$ has color $c$, the correspondent variable will be equal to 1, otherwise it will be 0. 
+
+The first set of constraints $\sum_{i=1}^{n} c_{iv} = 1$ has $n$ equalities and enforces that each vertex has one color. The second set of constraints $c_{iu} + c_{iv} \leq 1$ has $n.m$ inequalities and guarantee that there is no neighboring vertices with the same color. Finally, the last set of constraints y $\geq \sum_{i=1}^{n} i c_{iv}$ has $n$ inequalities and exists to extract the answer. For each inequality in this last set, exactly one variable will be equal to 1 and all the others equal to 0 (one vertex can have only one color). By that, the result of the sum will be $i$, where $i$ is the index associated with the variable $c{i,v}$, meaning that the vertex $v$ has color $i$. Given that, $y$ will be greater or equal to the maximum index $j$ among all colors utilized. Since we are minimizing $y$, the best answer will have lower index colors, and thus $y$ will be equal to the minimum number of colors needed to color $G$.
 
 \end{solution}
 
 
 \begin{solution}
-Supose $B_D$ is not totally unimodular. Then, there are $X \subset V$ and $Y \subset A$ such that $|X| = |Y|$ and $\text{det} \paren{B_D[X, Y]} \notin \{0, -1, +1\}$. Among all other pairs $\paren{X,Y}$, choose the one that minimizes the size of $X$ and $Y$. If $|X| = |Y| = 1$, $\text{det} \paren{B_D[X, Y]} \in \{0, -1, +1\}$ because by definition all the entries of $B_D$ are an element of $\{0, -1, +1\}$. Hence, $|X| = |Y| \geq 2$. If some column of $B_D = 0$, then $\text{det}\paren{B_D[X, Y]} = 0$. Hence, each column of $B_D[X, Y]$ has at least one entry that is an element of $\{-1, +1\}$. 
-If some column has exactly one 1 or one -1, say at entry $\paren{a,b} \in X \times Y$, then, by Laplace expansion of the determinant, we have $\text{det} \paren{B_D[X, Y]} = \pm \text{det}\paren{B_D[X \setminus \{a\}, Y \setminus \{b\}]} \in \{0, -1, +1\}$. Hence, every column of $B_D[X, Y]$ has exactly one entry equal to -1 and one entry equal to 1. Given that, $\paren{B_D[X \setminus \{a\}, Y \setminus \{b\}]}^{\transp}\mathbbm{1} = 0$, where $\mathbbm{1}$ is the vector where all entries are equal to 1. Hence, $\paren{\text{det}\paren{B_D[X, Y]}}^{\transp} = 0$, and therefore, $\text{det}\paren{B_D[X, Y]} = 0$. Thus, $B_D$ is totally unimodular.
+Supose $B_D$ is not totally unimodular. Then, there are $X \subseteq V$ and $Y \subseteq A$ such that $|X| = |Y|$ and $\text{det} \paren{B_D[X, Y]} \notin \{0, -1, +1\}$. Among all other pairs $\paren{X,Y}$, choose the one that minimizes the size of $X$ and $Y$. If $|X| = |Y| = 1$, $\text{det} \paren{B_D[X, Y]} \in \{0, -1, +1\}$ because, by definition, all the entries of $B_D$ are an element of $\{0, -1, +1\}$. Hence, $|X| = |Y| \geq 2$. If some column of $B_D = 0$, then $\text{det}\paren{B_D[X, Y]} = 0$. Hence, each column of $B_D[X, Y]$ has at least one entry that is an element of $\{-1, +1\}$. 
+If some column has exactly one 1 or one -1, say at entry $\paren{a,b} \in X \times Y$, then, by Laplace expansion of the determinant, we have $\text{det} \paren{B_D[X, Y]} = \pm \text{det}\paren{B_D[X \setminus \{a\}, Y \setminus \{b\}]} \in \{0, -1, +1\}$. Hence, every column of $B_D[X, Y]$ has exactly one entry equal to -1 and one entry equal to 1. Given that, $\paren{B_D[X, Y]}^{\transp}\mathbbm{1} = 0$, where $\mathbbm{1}$ is the vector where all entries are equal to 1. Hence, $\paren{\text{det}\paren{B_D[X, Y]}}^{\transp} = 0$, and therefore, $\text{det}\paren{B_D[X, Y]} = 0$. Thus, $B_D$ is totally unimodular.
 
 
 \end{solution}
@@ -103,7 +104,7 @@ If some column has exactly one 1 or one -1, say at entry $\paren{a,b} \in X \tim
   
   First, $S$ is a subset of $A$. Second, $N(S)$ is the set of all elements $b \in B$ such that $b \in K$. If $b \in B $ and $b \in K$, then $b$ has at least one neighbor that is not in $K$, otherwise $K$ would not be a minimum vertex cover because you could remove $b$ from $K$, and it would still be a vertex cover, which is a contradiction. Therefore, $b$ has a neighbor in $S$ and, by definition, is in $N(S)$. 
   
-  Finally, we will prove that $|S| > |N (S)|$. An important property of this setup is that $|M| = |K|$ and $|M| < |A|$, thus $|K| < |A|$. Set $K_A \coloneqq \{a \in A: a \in K\}$ and $K_B \coloneqq \{b \in B: b \in K\}$. Given that $K_A$ and $K_B$ are disjoint, we have $|K_A| + |K_B| < |A|$. Working on that, trying to have an inequality where one side is a subset of $A$, we have $|K_B| < |A| - |K_A|$. Because $K_A \subseteq A$, then $|A| - |K_A| = |A \setminus K_A|$. Knowing that $K_B =?????? N(S)$ and $A \setminus K_A = S$, it is proved that $|N (S)| < |S|$.
+  Finally, we will prove that $|S| > |N (S)|$. An important property of this setup is that $|M| = |K|$ and $|M| < |A|$, thus $|K| < |A|$. Set $K_A \coloneqq \{a \in A: a \in K\}$ and $K_B \coloneqq \{b \in B: b \in K\}$. Given that $K_A$ and $K_B$ are disjoint, we have $|K_A| + |K_B| < |A|$. Working on that, trying to have an inequality where one side is a subset of $A$, we have $|K_B| < |A| - |K_A|$. Because $K_A \subseteq A$, then $|A| - |K_A| = |A \setminus K_A|$. Knowing that $K_B \supseteq N(S)$ and $A \setminus K_A = S$, it is proved that $|N (S)| < |S|$.
 
   Regarding the time analysis, lines 2, 3, and 4 can be done in constant time if you store the size of the set (in the worst case, the IF verification is linear on the number of elements of the sets). The FOR loop on line 5 runs  $|A|$ times, and the IF on line 6 can be done in constant time by using an auxiliary boolean array that stores whether a vertex $v$ is in $K$ or not (it costs linear time on $|V(G)|$ to build the array plus linear time on $|K|$ to fill the array). Concluding, besides the running time of Bip-Matching-and-Vertex-Cover, Algorithm \ref{mh} runs in time $O (n + m)$ and does not run any graph traversal algorithm.
 
@@ -111,47 +112,39 @@ If some column has exactly one 1 or one -1, say at entry $\paren{a,b} \in X \tim
 \end{solution}
 
 \begin{solution}
-Set $C$ to be the set of all convex combinations of points of $X$. To prove that $\text{conv}\paren{X} = C$, I will prove that $\text{conv}\paren{X} \subseteq C$ and that $C \subseteq \text{conv}\paren{X}$. 
+Set $C$ to be the set of all convex combinations of points of $X$. To prove that $\text{conv}\paren{X} = C$, I will prove that $\text{conv}\paren{X} \subseteq C$ and that $C \subseteq \text{conv}\paren{X}$. Also, consider an injective function $f:X \mapsto [n]$, where $n$ is the size of $X$. 
 
 To prove that $\text{conv}\paren{X} \subseteq C$, I will prove that $X \subseteq C$ and it is convex. Given that $\text{conv}\paren{X}$ is the intersection of all convex subsets of $\Reals^{V}$ that contain $X$, if $X \subseteq C$ and $C$ is convex, then $\text{conv}\paren{X} \subseteq C$. 
 
-First, a point $y$ is convex combination of points of $X_i ????$ if there is $\lambda\in \Reals_{+}^{\text{I}}$ such that $\mathbbm{1} \lambda = 1$ and $y = \sum_{i \in \text{I}} \lambda_{i}x_{i}$. Given this definition is easy to see that every $x \in X$ is a convex combination of points of $X$ (choosing $\lambda_{i} = 1$ the sum will be equal to $x_{i}$). 
+First, a point $y$ is convex combination of points of $X$ if there is $\lambda\in \Reals_{+}^{\text{I}}$ such that $\mathbbm{1} \lambda = 1$ and $y = \sum_{i = 1}^{n} \lambda_{i}x_{i}$. Given this definition is easy to see that every $x \in X$ is a convex combination of points of $X$ (choosing $\lambda_{i} = 1$, the sum will be equal to $x_{i}$). 
 
-Finally, let $y_1 \coloneqq \sum_{i \in \text{I}} \alpha_{i}x_{i}$ and $y_2 \coloneqq \sum_{i \in \text{I}} \beta_{i}x_{i}$ be arbitrary convex combinations of points of $X$ and let $\lambda \in [0,1]$. We will prove that $(1 - \lambda) y_{1} + \lambda y_{2}$ is in $C$. 
+Finally, let $y_1 \coloneqq \sum_{i = 1}^{n} \alpha_{i}x_{i}$ and $y_2 \coloneqq \sum_{i = 1}^{n} \beta_{i}x_{i}$ be arbitrary convex combinations of points of $X$ and let $\lambda \in [0,1]$. We will prove that $(1 - \lambda) y_{1} + \lambda y_{2}$ is in $C$. Writing the expression for $y_1$ and $y_2$ we have $ (1 - \lambda) y_{1} + \lambda y_{2} = \paren{\sum_{i \in \text{I}} (1 - \lambda)\alpha_{i}x_{i}} + \paren{\sum_{i \in \text{I}} \lambda\beta_{i}x_{i}} $. Merging the two sums we have $(1 - \lambda) y_{1} + \lambda y_{2} = \sum_{i \in \text{I}} (1 - \lambda)\alpha_{i}x_{i} +  \lambda\beta_{i}x_{i} $. Finally we have $(1 - \lambda) y_{1} + \lambda y_{2} = \sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}}x_{i} $.
 
-$$(1 - \lambda) y_{1} + \lambda y_{2} = \paren{\sum_{i \in \text{I}} (1 - \lambda)\alpha_{i}x_{i}} + \paren{\sum_{i \in \text{I}} \lambda\beta_{i}x_{i}} $$
-$$(1 - \lambda) y_{1} + \lambda y_{2} = \sum_{i \in \text{I}} (1 - \lambda)\alpha_{i}x_{i} +  \lambda\beta_{i}x_{i} $$
-$$(1 - \lambda) y_{1} + \lambda y_{2} = \sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}}x_{i} $$
+If $\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = 1$, then $(1 - \lambda) y_{1} + \lambda y_{2}$ is a convex combination of points of $X$. We have that $\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = \sum_{i \in \text{I}} \paren{\alpha_{i} - \lambda\alpha_{i} +  \lambda\beta_{i}}$. Calculating we have $\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = \sum_{i \in \text{I}} \alpha_{i} - \sum_{i \in \text{I}} \lambda\alpha_{i} +  \sum_{i \in \text{I}}\lambda\beta_{i}$. Substituting values we have $\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = 1 - \lambda + \lambda = 1$. Thus, we proved that $\text{conv}\paren{X} \subseteq C$.
 
-If $\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = 1$, then $(1 - \lambda) y_{1} + \lambda y_{2}$ is a convex combination of points of $X$.
+To prove that $C \subseteq \text{conv}\paren{X}$, I will prove that an arbitrary convex combination of points of $X$ is a point that is in every convex subset of $\Reals^{V}$ that contain $X$, and therefore is in $\text{conv}\paren{X}$.
 
-$$\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = \sum_{i \in \text{I}} \paren{\alpha_{i} - \lambda\alpha_{i} +  \lambda\beta_{i}}$$
-$$\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = \sum_{i \in \text{I}} \alpha_{i} - \sum_{i \in \text{I}} \lambda\alpha_{i} +  \sum_{i \in \text{I}}\lambda\beta_{i}$$
-$$\sum_{i \in \text{I}} \paren{(1 - \lambda)\alpha_{i} +  \lambda\beta_{i}} = 1 - \lambda + \lambda = 1$$
+By defintion of convex, $y_{1} \coloneqq \lambda_{1}x_{1} + (1 - \lambda_{1})x_{2}$, where $x_{1}, x_{2} \in X$ and $\lambda_{1} \in [0,1]$, is in conv$(X)$. Also, $y_{2} \coloneqq \lambda_{2}y_{1} + (1 - \lambda_{1})x_{3}$, where $x_{3} \in X$ and $\lambda_{2} \in [0,1]$, is in conv$(X)$ because $y_{1}$ and $x_{3}$ are points in conv$(X)$. By adding all the n vertices using the same logic, we have that $$y \coloneqq \paren{\prod_{k = 1}^{n - 1} \lambda_{k}} x_{1} + \paren{\sum_{i = 2, i \neq j}^{n-1} \paren{\prod_{k = i}^{n-1} \lambda_{k}} \paren{1 - \lambda_{i-1}} x_{i}} + \paren{1 - \lambda_{n-1}} x_{n}$$ is in conv$(X)$.
 
-Thus, we proved that $\text{conv}\paren{X} \subseteq C$.
+First, $$\paren{\prod_{k = 1}^{n - 1} \lambda_{k}} + \paren{\sum_{i = 2, i \neq j}^{n-1} \paren{\prod_{k = i}^{n-1} \lambda_{k}} \paren{1 - \lambda_{i-1}}} + \paren{1 - \lambda_{n-1}} = 1$$ holds. You can verify that by simply putting in evidence the two terms with more lambdas and repeating the process. Every time you do that you will have $\lambda_i + 1 - \lambda_i$ and a smaller expression.
 
-To prove that $C \subseteq \text{conv}\paren{X}$, I will prove that any convex combination of points of $X$ is a point that is in every convex subset of $\Reals^{V}$ that contain $X$, and therefore is in $\text{conv}\paren{X}$.
+Finally, an arbitrary convex combination $c \coloneqq \sum_{i = 1}^{n} \alpha_{i} x_{i}$ can be written as $$\paren{\prod_{k = 1}^{n - 1} \lambda_{k}} x_{1} + \paren{\sum_{i = 2, i \neq j}^{n-1} \paren{\prod_{k = i}^{n-1} \lambda_{k}} \paren{1 - \lambda_{i-1}} x_{i}} + \paren{1 - \lambda_{n-1}} x_{n}$$. 
 
-By defintion of convex, $y_{1} \coloneqq \lambda_{1}x_{1} + (1 - \lambda_{1})x_{2}$, where $x_{1},??? x_{2} \in X$ and $\lambda_{1} \in [0,1]$, is in conv$(X)$. Also, $y_{2} \coloneqq \lambda_{2}y_{1} + (1 - \lambda_{1})x_{3}$, where $x_{3} \in X$ and $\lambda_{2} \in [0,1]$, is in conv$(X)$ because $y_{1} and x_{3}$ are points in conv$(X)$. Doing it recursively, $$y \coloneqq \paren{\prod_{k \in \text{I}} \lambda_{k}} x_{j} + \paren{\sum_{i \in \text{I}\setminus \{j\}} \paren{\prod_{k \in \text{I}} \lambda_{k}} \paren{1 - \lambda{i}} x_{i}} + \paren{1 - \lambda{i}} x_{l}$$ is in conv$(X)$ ???????? ta foda a notacao.
+I will show that this holds. Choose a function $f$ such that $\alpha_{i} > \alpha_{j}$ if $i > j$. In this generic setting $\alpha_{n} > 0$. Let $(1-\lambda_{n-1})\coloneqq \alpha_{i}$. You should also multiply every other $x_i$, where $i \in [n-1]$ by $\lambda_{n-1}$. At this poin the sum between $\alpha_{n}$ and the coeficient of an arbitrary $x_i$ is 1. You will repeat this procedure which you pick each $x_i$ in order from $i = n-1$ to $i = 2$, multiply it by $(1-\lambda_{i-1})$, where $(1-\lambda_{i-1})$ is the number which $(1-\lambda_{i-1})\prod_{k = i}^{n - 1} \lambda_{k} = \alpha_i$. For $x_{n-1}$ it is clear that this is possible because $(1-\lambda_{n-2}) \in [0,1]$, so the coeficient of $x_{n-1}$ can be set to the correct value $\alpha_{n_1}$ because  $\alpha_{n_1} \in [0,1-\alpha_{n}]$. This holds for every iteration because $\alpha = 1 - a$ implies that $\lambda\alpha = 1 - a - (1 - \lambda)\alpha$ for $a,\alpha,\lambda \in [0,1]$. Given that, in every iteration an arbitrary coeficient will be equal to 1 minus the sum of all seted coeficients. In addition, you will always be able to set the correct value for a coeficient because it will be always equal or smaller of its current value, otherwise the previous statement would not hold. Also, the sum of coeficients will be 1 at the end because it match our expression. The last coeficient, because of that, will have the right value. 
 
-First, $$\paren{\prod_{k \in \text{I}} \lambda_{k}}+ \paren{\sum_{i \in \text{I}\setminus \{j\}} \paren{\prod_{k \in \text{I}} \lambda_{k}} \paren{1 - \lambda{i}}} + \paren{1 - \lambda{i}} = 1$$
-
-Finally, any convex combination $c \coloneqq \sum_{i \in \text{I}} \lambda_{i} x_{i}$ can be written as ----------. This follows because it is possible to build the coeficients on -------- based on $lambda_{i}$. Choose an arbitrary $x_{1} \in X$ with coeficient $\lambda_{1} > 0$ and let $(1-\lambda_{k})?? \coloneqq \lambda_{i}$. If $\lambda_{i} = 1$, then is trivial. If it $\lambda_{i} < 1$, then choose an arbitrary $x_{2} \in X$ with coeficient $\lambda_{2} > 0$
-
-
-$\sum_{j \in \text{I} \setminus \{i\}} \lambda_{j} > 0$
-
+Given the discussion, we can conclude that $\text{conv}\paren{X} = C$.
 
 
 \end{solution}
 
 \begin{solution}
-To prove that 
+Following the hint, I will prove that ${b(b(\mathcal{H}))}^{\uparrow} = \mathcal{H}^{\uparrow}$. For that, I will show that ${b(b(\mathcal{H}))}^{\uparrow} \subseteq \mathcal{H}^{\uparrow}$, and then that $\mathcal{H}^{\uparrow} \subseteq {b(b(\mathcal{H}))}^{\uparrow}$. Note that, by definition, the hyperedges of ${b(b(\mathcal{H}))}^{\uparrow}$ are all subsets of vertices of $\mathcal{H}$ that have at least one vertex of each minimal vertex cover of $\mathcal{H}$. On the other hand, the hyperedges of $\mathcal{H}^{\uparrow}$ are all subsets of vertices of $\mathcal{H}$ that contains at least one hyperedge of $\mathcal{H}$.
 
-The edges of ${b(b(H))}^{\uparrow}$ are all sets of vertices that have at least one vertex of each minimal vertex cover. Given that for a vertex cover you need at least one vertex that is and end of each hyperedge of the graph, you can use each vertex of the same hyperedge to get distincts minimal vertex covers. Also, it is important to state that every minimal vertex cover will have at least one of those vertices, otherwise it would not be a vertex cover. By that, every hyperedge of $H$ is in ${b(b(H))}^{\uparrow}$. By the definition of the upperarrow symbol $H^{\uparrow} \subset {b(b(H))}^{\uparrow}$.
+To prove that ${b(b(\mathcal{H}))}^{\uparrow} \subseteq \mathcal{H}^{\uparrow}$, I will prove that a non-hyperedge of $\mathcal{H}^{\uparrow}$ is non-hyperedge of ${b(b(\mathcal{H}))}^{\uparrow}$. An arbitrary set of vertices $s$ is not a hyperedge of ${\mathcal{H}}^{\uparrow}$ if, for all $e \in \mathcal{E}$, holds $e \nsubseteq s$. If exists a minimal vertex cover $cov$ of $\mathcal{H}$ such that $s \cap cov = \emptyset$, then $s$ is a non-hyperedge of $b(b(\mathcal{H}))^{\uparrow}$ because, by definition, a hyperedge of $b(b(\mathcal{H}))^{\uparrow}$ need to have at least one element of each minimal vertex cover. Let $cov$ be a set of vertices that is built by including one element of each $e \in \mathcal{E}$ that is not in $s$, for sure $cov$ is a vertex cover. Then, get $cov_{\text{min}}$, a minimal set of $v \in V$ such that $cov_{\text{min}}$ is a vertex cover and every element in $cov_{\text{min}}$ is in $cov$. This can be done by removing each element $x \in cov$ such that $cov \setminus \{x\}$ is a vertex cover of $\mathcal{H}$. Given that $cov_{\text{min}} \cap s = \emptyset$, then ${b(b(\mathcal{H}))}^{\uparrow} \subseteq \mathcal{H}^{\uparrow}$.
 
-Edges of $H^{\uparrow}$ are all sets of vertices that contains at least one hyperedge of $H$. Then, if a set of vertices is not in $H^{\uparrow}$, it means that is a set that does not contain any hyperedge of $H$. Since there is a minimal vertex cover with each vertex of each hyperedge of $H$, 
+To prove that $\mathcal{H}^{\uparrow} \subseteq {b(b(\mathcal{H}))}^{\uparrow}$, I will prove that if a set of vertices is a hyperedge of ${\mathcal{H}}^{\uparrow}$, then it is also a hyperedge of ${b(b(\mathcal{H}))}^{\uparrow}$. By definition, all minimal vertex covers of $\mathcal{H}$ contains at least one element of each hyperedge of $\mathcal{H}$. More than that, for each hyperedge $e \in \mathcal{E}$ there is a minimal vertex cover $cov_{\text{min}}$ such that $e \cap cov_{\text{min}} \neq \emptyset$. This is true because you can made this minimal vertex cover by starting with $\{v\}$, where $v$ is an arbitrary vertex in $e$, and continue adding vertices of hyperedges that are not covered by the current elements. As you are adding only vertices which cover new hyperedges, you will stop adding when the set becomes a vertex cover. Because you can not remove any element, the set is a minimal vertex cover of $\mathcal{H}$. Given that, every $e \in \mathcal{E}$  is a hyperedge in ${b(b(\mathcal{H}))}^{\uparrow}$. By definition, every hyperedge of ${\mathcal{H}}^{\uparrow}$ is also a hyperedge of ${b(b(\mathcal{H}))}^{\uparrow}$.
+
+By the discussion above, ${b(b(\mathcal{H}))}^{\uparrow} = \mathcal{H}^{\uparrow}$. Applying the definition we can state that \\$\paren{{b(b(\mathcal{H}))}^{\uparrow}}^{\text{min}} = \paren{\mathcal{H}^{\uparrow}}^{\text{min}}$. By exercise 11 of assignment 0 we have $\paren{b(b(\mathcal{H}))}^{\text{min}} = \mathcal{H}^{\text{min}}$. As the hypergraph $b(b(\mathcal{H}))$ has a set of hyperedges only with minimal hyperedges, we have $b(b(\mathcal{H})) = \mathcal{H}^{\text{min}}$. 
 
 \end{solution}
 
