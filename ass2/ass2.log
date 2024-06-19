@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  9 JUN 2024 17:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  18 JUN 2024 23:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -518,27 +518,34 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 )) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for U+bbm on input line 82.
+Overfull \hbox (5.93106pt too wide) in paragraph at lines 48--49
+\OT1/cmr/m/n/10.95 from-Transshipment($\OML/cmm/m/it/10.95 D; u; b$\OT1/cmr/m/n/10.95 ) as we may cre-ate an aux-il-iary di-graph $\OML/cmm/m/it/10.95 D[] [][]\OT1/cmr/m/n/10.95 = (\OML/cmm/m/it/10.95 V \OMS/cmsy/m/n/10.95 [ f\OML/cmm/m/it/10.95 r; s\OMS/cmsy/m/n/10.95 g\OML/cmm/m/it/10.95 ; A[]; '[]\OT1/cmr/m/n/10.95 )$
+ []
+
+[2
+
+] [3]
+LaTeX Font Info:    Trying to load font information for U+bbm on input line 131.
  (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-) [2
+) [4
 
-] [3
+] [5
 
 ] (./ass2.aux) ) 
 Here is how much of TeX's memory you used:
- 16342 strings out of 478287
- 316395 string characters out of 5849289
- 594668 words of memory out of 5000000
- 34084 multiletter control sequences out of 15000+600000
+ 16377 strings out of 478287
+ 316914 string characters out of 5849289
+ 605786 words of memory out of 5000000
+ 34119 multiletter control sequences out of 15000+600000
  477706 words of font info for 62 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 115i,12n,118p,1192b,748s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/andre/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on ass2.pdf (3 pages, 92979 bytes).
+ 115i,12n,118p,775b,748s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/andre/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on ass2.pdf (5 pages, 147664 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
- 39 compressed objects within 1 object stream
+ 93 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

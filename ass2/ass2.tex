@@ -1,0 +1,174 @@
+\documentclass[11pt,leqno,final]{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{etoolbox}
+\usepackage{background}
+
+%my stuff
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{notation}
+
+
+%--------------------------------
+
+\SetBgContents{\rule{\paperwidth}{0.8pt}}
+\SetBgColor{gray!50}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgScale{1}
+
+\theoremstyle{definition}
+\newtheorem{solution}{Solution}
+\AtEndEnvironment{solution}{\clearpage}
+
+\begin{document}
+% DO NOT WASTE SPACE by copying the exercise statement.
+% The grader already knows which exercise you are solving from the
+% solution counter.
+%---------------------------------------------------
+
+\begin{solution}
+    The exercise asks to find, for each shore $R \subseteq V \setminus \{s\}$, a solution $(y,z)$, where $z \geq B_{D}^{\transp}y$ and $y_{s} - y_{r} \geq 1$. Also, we have that the inequality $u^{\transp}z \leq u(\deltaout[D](R))$ should be true. 
+    Given that, I built $z$ such that, for each $a \in A(D)$, we have $z_a = 1$ if $a \in \deltaout[D](R)$ and $z_a = 0$ otherwise. On the other hand, $y$ was built such that, for each $v \in V(D)$, we have $y_v = 0$ if $v \in R$ and $y_v = 1$ otherwise.
+
+    First, $y_{s} - y_{r} \geq 1$ because $r \in R$ and $s \notin R$, so $y_r = 0$ and $y_s = 1$. 
+
+    Second, consider an arbitrary arc $a \in A(D)$ from $u \in V(D)$ to $w \in V(D)$. Using the definition of $B_{D}^{\transp}$, we have that $(B_{D}^{\transp}y)_a = \sum_{v \in V} ((B_{D}^{\transp})_{a,v}) (y_v) = y_w - y_u$. Given that, for $z \geq B_{D}^{\transp}y$, we need that $z_a \geq y_w - y_u$ for every $a \in A(D)$. In this scenario, the expression $y_w - y_u$ is greater than zero only if $y_w = 1$ and $y_u = 0$. In this case, the entry $z_a$ will be equal to 1 because, acording to my formulation, $a$ will be in $\deltaout[D](R)$. As $z_a > 0$ for every $a$, we can conclude that $z \geq B_{D}^{\transp}y$.
+
+    Finally, using the $z$ that I described, we have that $u^{\transp}z = \sum_{a \in A(D)} u_a z_a = \sum_{a \in \deltaout[D](R)} u_a$. By definition, we have that $u(\deltaout[D](R)) = \sum_{a \in A(D)} u_a$, thus $u^{\transp}z \leq u(\deltaout[D](R))$. 
+
+    I demonstrated that the pair $(y,z)$ I derived from an arbitrary shore meets all the necessary conditions.
+
+\end{solution}
+
+\begin{solution}
+    Below is the pseudocode requested. The algorithm uses the funciton MaxFlowInst-from-Transshipment($D, u, b$) as we may create an auxiliary digraph $D_{\text{aux}} \coloneqq (V \cup \{r,s\}, A_{\text{aux}}, \varphi_{\text{aux}})$ as follows. Set $W \coloneqq \{v \in V : b_v < 0\}$ and set $Y \coloneqq \{v \in V : b_v > 0\}$. I added new vertices $r,s \notin V$, and set $A_{\text{aux}} \coloneqq A\cup W \cup Y$, where we may assume that $\{A, W, Y\}$ is pairwise disjoint (by possible relabeling common elements), where the incidence function $\varphi_{\text{aux}}$ and arc capacities $u_{\text{aux}}: A_{\text{aux}} \to \Reals_{+} \cup \{\infty\}$ are:
+    \begin{itemize}
+      \item $\varphi_{\text{aux}}(w) \coloneqq rw$, $u_{\text{aux}}(w) \coloneqq -b_w$, for each $w \in W$
+      \item $\varphi_{\text{aux}}(y) \coloneqq ys$, $u_{\text{aux}}(y) \coloneqq b_y$, for each $y \in Y$
+      \item $\varphi_{\text{aux}}(a) \coloneqq \varphi(a)$, $u_{\text{aux}}(a) \coloneqq u(a)$, for each $a \in A$
+    \end{itemize}
+
+    It is also important to mention that the MaxFlow-MinCut algorithm returns a pair, and the value of the outcome will not be equal to ``unbounded''. This is because $b \in \Reals^{V}$ and every outward arc of $r$ has its capacity equal to minus a value of $b$.
+
+    \begin{algorithm}
+        \caption{Transshipment($D$, $u$, $b$)}\label{trans}
+        \begin{algorithmic}
+
+          \State $(D_{\text{aux}}, u_{\text{aux}}, r, s) \coloneqq$ MaxFlowInst-from-Transshipment($D, u, b$)
+          
+          \State (\underline{\hspace{.15in}}, $(x, R)) \coloneqq$ MaxFlow-MinCut($D_{\text{aux}}, u_{\text{aux}}, r, s$)
+
+          \For{each $a \in A(D_{\text{aux}})$}
+            \State $v,u \gets \text{ends}[a]$
+
+            \If{$v \in \{r\}$}
+              
+              \If{$x_a < -b_u$}
+                \State \Return (infeasible, $V \setminus R$)  
+              \EndIf
+            
+            \ElsIf{$u \in \{s\}$}
+              
+              \If{$x_a < b_v$}
+                \State \Return (infeasible, $V \setminus R$)
+              \EndIf
+        
+            \EndIf
+
+          \EndFor
+
+          \State $x_{\text{ans}} \coloneqq x \restrict{A(D)}$ 
+
+      
+          \State \Return (feasible, $x_{\text{ans}}$)
+            
+        \end{algorithmic}
+      \end{algorithm}
+
+    First, I will prove that, if $x_{rw} = -b_w$ for every $w \in W$ and $x_{ys} = b_y$ for every $y \in Y$, then $x_{\text{ans}}$ is b-Transshipment. This is the case where the algorithm returns (feasible, $x_{\text{ans}}$). For an arbitrary $w \in W$, because of the call to MaxFlow-MinCut, excess$_x(w) = 0$. When we stop taking into account the arc $rw$ as we do when we use $x_{\text{ans}}$, we have excess$_{x_{\text{ans}}}(w) = - x_{rw}$. This is because $rw$ is the only arc that we added that is in $\deltain[D_{\text{aux}}](w)$ or $\deltain[D_{\text{aux}}](w)$. If $x_{rw} = -b_w$, then excess$_{x_{\text{ans}}}(w) = b_w$.
+
+    Similarly, for an arbitrary $y \in Y$, because of the call to MaxFlow-MinCut, excess$_x(y) = 0$. When we stop taking into account the arc $ys$ as we do when we use $x_{\text{ans}}$, we have excess$_{x_{\text{ans}}}(y) = x_{ys}$. This is because $ys$ is the only arc that we added that is in $\deltain[D_{\text{aux}}](y)$ or $\deltain[D_{\text{aux}}](y)$. If $x_{ys} = b_y$, then excess$_{x_{\text{ans}}}(y) = b_y$. In the last scenario, for an arbitrary $v \in V \setminus (W \cup Y)$, we know that $b_v = 0$ and excess$_x(v) = 0$. As we did not add arcs which involves this vertex, excess$_{x_{\text{ans}}}(v) = 0 = b_v$.
+
+    Given that, if $x_{rw} = -b_w$ for every $w \in W$ and $x_{ys} = b_y$ for every $y \in Y$, then, for every $v \in V$, we have that excess$_{x_{\text{ans}}}(v) = b_v$. Thus $x_{\text{ans}}$ is b-Transshipment.
+
+    Using the same ideia, it is easy to see that if $x_{rw} \neq -b_w$ for an arbitrary $x \in X$, then excess$_{x_{\text{ans}}}(w) \neq b_w$. Similarly, if $x_{ys} \neq b_y$, then excess$_{x_{\text{ans}}}(y) \neq b_y$. As $x < u_{\text{aux}}$, we only have to check if the value of the entry of $x$ is smaller. It is important mentioning again that if $b_v = 0$, then excess$_{x_{\text{ans}}}(v) = 0 = b_v$. This is the case where the algorithm returns (infeasible, $V \setminus R$). 
+
+    First, the set $S \coloneqq V \setminus R$ is clearly a subset of $V$ such that $\deltain[D](S) = \deltaout[D](R)$. Finally, I should prove that $b(S) > u(\deltain[D](S))$. 
+
+    Concluding, I proved that we have a $b$-transshipment if and only if $x_{rw} = -b_w$ for every $w \in W$ and $x_{ys} = b_y$ for every $y \in Y$. I did that by showing that if $x_{rw} = -b_w$ for every $w \in W$ and $x_{ys} = b_y$ for every $y \in Y$, then we have a $b$-transshipment and if this is false then we return a certificate that we do not have a $b$-transshipment.
+
+\end{solution}
+
+
+\begin{solution}
+Below is the pseudocode requested. 
+
+\begin{algorithm}
+  \caption{Circulation($D$, $l$, $u$)}\label{circ}
+  \begin{algorithmic}
+
+    \State $b \coloneqq - B_D l$ \Comment $B_D$ is the incidence matrix of D
+
+    \State $u' \coloneqq u - l$
+
+    \State (outcome, $C) \coloneqq$ Transshipment($D, u', b$)
+
+    \If{outcome = infeasible}
+              
+      \State \Return (infeasible, $C$)  
+    
+    \EndIf 
+    
+    \State \Return (feasible, $C + l$)
+      
+  \end{algorithmic}
+\end{algorithm}
+
+First, it is easy to see that $\ones^{\transp} B_D l = 0$ because, by definition, each entry is a sum of values that will be in the expression of the value of other entry in $B_D l$, but with the oposite sign.
+
+In the first two lines of the code, I am defining the arguments of the Transshipment function. On the third line, we have a call to Transshipment algorithm using $D, u'$ and $b$. Given that, this algorithm returns $C$ such that $B_D C = b$ and $C < u'$ if the outcome is feasible. In this scenario the Circulation function returns (feasible, $C + l$). This is exactly what we want because $B_D (C + l) = B_D C + B_D l = b + B_D l = 0$. Also, we have that $C < u'$, and given that $C \in \Reals_+$, then $l < C + l < l + u' = u$. Thus, $C + l$ is a circulation that satisfies all the necessary conditions.
+
+On the other scenario, where the outcome is infeasible, we have that $C$ is a subset of $V$ such that $b(C) > u'(\deltain[D](C))$. Expanding the expression, we have $b(C) > u(\deltain[D](C)) - l(\deltain[D](C))$. As $l \in \Reals_{+}$, we have $b(C) + l(\deltain[D](C)) > u(\deltain[D](C))$. Using my definition of $b$, we have that $-\sum_{v \in C} \text{excess}_{l}(v) + l(\deltain[D](C)) > u(\deltain[D](C))$. Finally we have that $l(\deltaout[D](C)) > u(\deltain[D](C))$ as required.
+
+Concluding, I proved that the Circulation algorithm always return the correct answer by showing that the return is correct in every possible scenario.
+
+\end{solution}
+
+
+\begin{solution}
+Below is the pseudocode requested. The algorithm uses the function Bounded-Transshipment-Inst-from-Bounded-Orientation($G,d$) which returns $(D, u, b)$. The digraph $D \coloneqq (V, E, \psi)$ is an arbitrary orientation of $G$, the arc capacities $u: E \to \Reals_{+} \cup \{\infty\}$ is a constant function where $u_a = 1$ for every $a \in E$. Finally, the vector $b \in \Reals^{V}$ is such that $b_v = d_v - |\deltaout[D](v)|$. 
+
+\begin{algorithm}
+  \caption{Bounded-Orientation($G$, $d$)}\label{bound}
+  \begin{algorithmic}
+
+    \State $(D, u, b) \coloneqq$ Bounded-Transshipment-Inst-from-Bounded-Orientation($G,d$)
+
+    \State (outcome, $C) \coloneqq$ Bounded-Transshipment($D, u, b$)
+
+    \If{outcome = infeasible}
+              
+      \State \Return (infeasible, $C$)  
+    
+    \EndIf 
+    
+    \For{each $a \in A(D)$}
+      
+      \If{$x_a = 1$}
+        \State $v,u \gets \text{ends}[a]$        
+        \State $\psi(a) \coloneqq uv$
+      \EndIf 
+
+    \EndFor
+    \State \Return (feasible, $D$)
+      
+  \end{algorithmic}
+\end{algorithm}
+
+\end{solution}
+
+\end{document}
