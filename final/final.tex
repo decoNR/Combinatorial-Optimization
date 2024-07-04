@@ -1,0 +1,132 @@
+\documentclass[11pt,leqno,final]{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{etoolbox}
+\usepackage{background}
+
+%my stuff
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{dsfont}
+\usepackage{notation}
+
+
+%--------------------------------
+
+\SetBgContents{\rule{\paperwidth}{0.8pt}}
+\SetBgColor{gray!50}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgScale{1}
+
+\theoremstyle{definition}
+\newtheorem{solution}{Solution}
+\AtEndEnvironment{solution}{\clearpage}
+
+\begin{document}
+% DO NOT WASTE SPACE by copying the exercise statement.
+% The grader already knows which exercise you are solving from the
+% solution counter.
+%---------------------------------------------------
+
+\begin{solution}
+    First we will prove that $x = \sum_{P \in \mathcal{P}} \mu_{P} \mathds{1}_P + \sum_{C \in \mathcal{C}} \lambda_C \mathds{1}_C$, where $\lambda$ and $\mu$ are the values returned by Decompose-Flow function. By line 3 of the algorithm, we have that $x = x^{+} \restrict{A(D)}$. Using theorem 44, we have that $x = (\sum_{C \in \mathcal{C}(D^{+})} \lambda^{+}_C \mathds{1}_C) \restrict{A(D)} = \sum_{C \in \mathcal{C}(D^{+})} \lambda^{+}_C \mathds{1}_C \restrict{A(D)}$. Expanding the somation considering the circuits that are in $D$ and the ones that are only in $D^{+}$, we have that $x = \sum_{C \in \mathcal{C}(D)} \lambda^{+}_C \mathds{1}_C \restrict{A(D)} + \sum_{C \in \mathcal{C}(D^{+}) \setminus \mathcal{C}(D)} \lambda^{+}_C \mathds{1}_C \restrict{A(D)}$. By lines 5 and 9 of the algorithm and rewriting some terms, we have that $x = \sum_{C \in \text{supp}(\lambda^{+})\setminus \mathcal{P^{'}}} \lambda^{+}_C \mathds{1}_C \restrict{A(D)} + \sum_{C \in \mathcal{P^{'}}} \lambda^{+}_C \mathds{1}_C \restrict{A(D)}$. Finally, by lines 5, 9 and 10, we have that $x = \sum_{C \in \mathcal{C}} \lambda_C \mathds{1}_C + \sum_{P \in \mathcal{P}} \mu_P \mathds{1}_P $. 
+
+    Now we will prove that val$(x) = \mathds{1}^{\transp} \mu$. By line 3 of the algorithm, we have that val$(x) = x^{+}_{a^{+}} = e^{\transp}_{a^{+}} x^{+}$. Expanding the expression, we have that val$(x) = e^{\transp}_{a^{+}} \sum_{C \in \mathcal{C}(D^{+})} \lambda^{+}_C \mathds{1}_C$. Then, we have that val$(x) =  \sum_{C \in \mathcal{C}(D^{+})} \lambda^{+}_C (e^{\transp}_{a^{+}} \mathds{1}_C) = \sum_{C \in \mathcal{C}(D^{+}) \setminus \mathcal{C}(D)} \lambda^{+}_C$. By line 9 of the algorithm, we have that val$(x) = \mathds{1}^{\transp} \mu$.
+
+    Finally, we will prove that $|\text{supp}(\mu)| + |\text{supp}(\lambda)| \leq |\text{supp}(x)| + 1$. First, we have that $|\text{supp}(\lambda^{+})| = |\text{supp}(\lambda^{+} \restrict{ \text{supp}(\lambda^{+}) \setminus \mathcal{P^{'}}})| + |\text{supp}(\lambda^{+} \restrict{\mathcal{P^{'}}})| = |\text{supp}(\lambda)| + |\text{supp}(\mu)|$. Also, we have that $|\text{supp}(x^{+})| = |\text{supp}(x)| + [a^{+} \in \text{supp}(x^{+})] \leq |\text{supp}(x)| + 1$. By theorem 44, we have that $|\text{\text{supp}}(\lambda^{+})| \leq |\text{\text{supp}}(x^{+})|$. Using that and what was established before, we have that  $|\text{supp}(\lambda)| + |\text{supp}(\mu)| = |\text{\text{supp}}(\lambda^{+})| \leq |\text{\text{supp}}(x^{+})| \leq |\text{supp}(x)| + 1$. Then follows that $|\text{supp}(\lambda)| + |\text{supp}(\mu)| \leq |\text{supp}(x)| + 1$.  
+
+\end{solution}
+
+\begin{solution}
+  First, we will describe the instance of the min-cost flow problem that Min-Cost-Flow-Inst-From-Max-Flow-Inst returns. The auxiliary digraph $D' \coloneqq (V, A', \varphi')$ is built from $D$ by adding an arc $rs \notin A(D)$ from $r$ to $s$. Then, we set $\varphi'(a) = \varphi(a)$ for $a \in A(D)$ and $\varphi'(rs) = rs$. Also, we have that $u' \in \Reals^{A}_{+}$ is such that $u'(a) = u(a)$ for $a \in A(D)$ and $u'(rs) = u(\deltaout[D](\{r\}))$. In respect to $c'$, we have that $c' \in \Reals^{A}$ is such that $c'(a) = 0$ for $a \in A(D)$ and $c'(rs) = 1$. It is important mentioning that the $r'$ returned is $r$ and $s'$ is $s$. To conclude the description, we have $\phi' \in \Reals_{+}$ equal to $\deltaout[D](\{r\})$, an upperbound to the maximum value of a $rs$-flow in $D$. Given that, our Min-Cost-Flow instance is a feasible instance. It is worth writing that $\phi'$ smaller or equal to the maximum value of a $rs$-flow in $D'$ because of $u'(rs)$.
+
+  Regarding the Post-Process, it returs $x \coloneqq x'\restrict{A(D)}$. Now we will prove that $x$ is a maximum $rs$-flow in $D$. First, we know that Min-Cost-Flow in line 3 returns a minimum cost $r's'$-flow in $D'$ with flow value equal to $\phi'$. As the cost is given by $c'^{\transp} x'$, by our definitions, the cost is equal to $x_{r's'}$. Also, we know that val$(x) = \text{val}(x') - x_{r's'}$. By the argument of the Min-Cost-Flow function, we have that val$(x) = \deltaout[D](\{r\}) - x'_{r's'}$. If there is an $rs$-flow $y$ in $D$ such that val$(y) >$ val($x$) and the Post-Process algorithm returns $x$, then it is a contradiction because it means that Min-Cost-Flow function returned $x'$ instead of $y'$ (abusing notation without without harming understanding), but we have that $y'_{r's'} < x'_{r's'}$ (by the equation of the value of a flow).Thus, $x$ is a maximum value $rs$-flow in $D$. It is worth mentioning that, as we use an upperbound for the $rs$-flow in $D$, then all possible flows are allowed in our description.
+
+\end{solution}
+
+\begin{solution}
+   Below is the pseudocode requested. The function Circulation-Inst-from-Bounded-Transshipment($D, u, b$) returns an auxiliary digraph $D' \coloneqq (V \cup \{r, s\}, A', \varphi')$ created as follows. Set $R^{-} \coloneqq \{v \in V : b_v < 0\}$, set $R^{+} \coloneqq \{v \in V : b_v \geq 0\}$  and set $S^{+} \coloneqq \{v \in V : b_v > 0\}$. I added new vertices $r, s \notin V(D)$, and set $A' \coloneqq A\cup R^{-} \cup R^{+} \cup S^{-} \cup \{sr\}$, where we may assume that $\{A, R^{-}, R^{+}, S^{-}, {sr}\}$ is pairwise disjoint (by relabeling common elements), where the incidence function $\varphi'$, arc capacities $u': A' \to \Reals_{+}$ and the the vector $l \leq u'$ are:
+  \begin{itemize}
+    \item $\varphi'(v) \coloneqq rv$, $l_v \coloneqq -b_v$, $u'(v) \coloneqq \mathcal{1}$, for each $v \in R^{-}$
+    \item $\varphi'(v) \coloneqq rv$, $l_v \coloneqq 0$, $u'(v) \coloneqq \mathcal{1}$, for each $v \in R^{+}$
+    \item $\varphi'(v) \coloneqq vs$, $l_v \coloneqq 0$, $u'(v) \coloneqq b_v$, for each $v \in S^{+}$
+    \item $\varphi'(sr) \coloneqq sr$, $l_{sr} \coloneqq 0$, $u'(sr) \coloneqq \mathcal{1}$
+    \item $\varphi'(a) \coloneqq \varphi(a)$, $l_a \coloneqq 0$, $u'(a) \coloneqq u(a)$, for each $a \in A$
+  \end{itemize}
+
+  \begin{algorithm}
+    \caption{Bounded-Transshipment($D$, $u$, $b$)}\label{btrans}
+    \begin{algorithmic}[1]
+
+      \State $(D', u', l) \coloneqq$ Circulation-Inst-from-Bounded-Transshipment($D, u, b$)
+      
+      \State (outcome, $C) \coloneqq$ Circulation($D', u', l$)
+
+      \If{outcome = feasible}
+        \State \Return (feasible, $C \restrict{A(D)}$)
+
+      \ElsIf{outcome = feasible}
+        \State \Return (infeasible, $V \setminus C$)  
+          
+      \EndIf
+        
+    \end{algorithmic}
+  \end{algorithm}
+    First, we will prove that the algorithm returns a vector $x \in \Reals^{A}_{+}$ such that excess$_x \leq b$ and $x \leq u$ when the outcome is feasible. This is the scenario which the algorithm reach line 4 and thus $C$ is a circulation $x'$ in $D'$ such that $l \leq x' \leq u'$. First, we have that $x \leq u$ because $x' \leq u'$ and $u'_a = u_a$ for every $a \in A(D)$. Second, because we made a call to Circulation, we have that excess$_{x'}(v) = 0$ (in $D'$) for every $v \in V(D')$. As we are returning $x \coloneqq x' \restrict{A(D)}$, we have that excess$_x(v)$ (in $D$), for an arbitrary $v \in V(D)$, is equal to $x(\deltaout[D'](v) \setminus \deltaout[D](v)) - x(\deltain[D'](v) \setminus \deltain[D](v))$. Given that, we will prove that excess$_x \leq b$ considering that $l_a \leq x_a \leq u'_a$ for $a \in A(D)$. For an arbitrary $v \in \{v \in V(D): b_v < 0\}$, we have that excess$_x(v) = -x_v$, thus $l_v \leq$ -excess$_x(v) \leq u'_v$, which is the same as $b_v \geq$ excess$_x(v) \geq -\mathcal{1}$. For an arbitrary $v \in \{v \in V(D): b_v = 0\}$, we have that excess$_x(v) = -x_v$, thus $l_v \leq$ -excess$_x(v) \leq u'_v$, which is the same as $b_v \geq$ excess$_x(v) \geq -\mathcal{1}$. Finally, for an arbitrary $v \in \{v \in V(D): b_v > 0\}$, we have that excess$_x(v) = x_{vs} - x_{rv}$, where $\varphi'(vs) = vs$ and $\varphi'(rv) = rv$. This also gives that $b_v \geq$ excess$_x(v) \geq -\mathcal{1}$. We proved that $x$ satisfies all the necessary conditions.
+
+    Finally, on the infeasible scenario (line 6), we have that $C$ is such that $C \subseteq V(D')$ and $l(\deltaout[D'](C)) > u'(\deltain[D'](C))$. By this inequality, we have that $\{r,s\} \subseteq C$. Given that, we have $-b(\{v \in R^{-}\} \cap \{v \notin C\}) > u(\deltain[D](C)) + b(\{v \in R^{+}\} \cap \{v \notin C\})$. Then, we have that $b(\{v \notin C\} \cap \{v \in V\}) + u(\deltain[D](C)) < 0$. Finally, this is the same as $b(V \setminus C) + u(\deltaout[D](V \setminus C)) < 0$. Thus, we also return the correct output in the infeasible scenario.
+
+\end{solution}
+
+\begin{solution}
+  Below is the pseudocode requested. Set $V_1 \coloneqq \{v_1 \in V \}$ and set $V_2 \coloneqq \{v_2 \in V \}$. The function Max-Flow-Inst-from-Common-Transversal($\{r,s\} \cup \mathcal{H}_1, \mathcal{H}_2$) returns the digraph $D \coloneqq (\mathcal{E}_1 \cup V_1 \cup V_2 \cup \mathcal{E}_2 \cup, A, \varphi)$ created as follows. 
+  
+  Set $A_1 \coloneqq \{re: e \in \mathcal{E}_1\}$, set $A_2 \coloneqq \{ev_1: e \in \mathcal{E}_1, v_1 \in V_1, v_1 \subseteq e\}$, set $A_3 \coloneqq \{v_1v_2: v_1 \in V_1, v_2 \in V_2, v_1 = v_2\}$, set $A_4 \coloneqq \{v_2e: e \in \mathcal{E}_2, v_2 \in V_2, v_2 \subseteq e\}$ and set $A_5 \coloneqq \{es: e \in \mathcal{E}_2\}$. Then, set $A \coloneqq A_1 \cup A_2 \cup A_3 \cup A_4 \cup A_5$, where we may assume that $\{A_1, A_2, A_3, A_4, A_5\}$ is pairwise disjoint (by possibly relabeling common elements), where the incidence function $\varphi$ and arc capacities $u: A \to \Reals_{+}$ are:
+  \begin{itemize}
+    \item $\varphi(re) \coloneqq re$, $u(re) \coloneqq 1$, for each $re \in A_1$
+    \item $\varphi(ev_1) \coloneqq ev_1$, $u(ev_1) \coloneqq \mathcal{1}$, for each $ev_1 \in A_2$
+    \item $\varphi(v_1v_2) \coloneqq v_1v_2$, $u(v_1v_2) \coloneqq 1$, for each $v_1v_2 \in A_3$
+    \item $\varphi(v_2e) \coloneqq v_2e$, $u(v_2e) \coloneqq \mathcal{1}$, for each $v_2e \in A_4$
+    \item $\varphi(es) \coloneqq es$, $u(es) \coloneqq 1$, for each $es \in A_5$
+  \end{itemize}
+
+  It is important mentioning that MaxFlow-MinCut never returns the infeasible case because of the way we build $D$.
+
+  \begin{algorithm}
+    \caption{Common-Transversal($D$, $u$, $b$)}\label{ctrans}
+    \begin{algorithmic}[1]
+
+      \State $(D, u, r, s) \coloneqq$ MaxFlow-MinCut-Inst-from-Common-Transversal($\mathcal{H}_1, \mathcal{H}_2$)
+      
+      \State (\underline{\hspace{.15in}}, $(x, R)) \coloneqq$ MaxFlow-MinCut($D, u, r, s$)
+
+      \If{val$(x)$ = $u(\deltain[D](\{s\}))$}
+        \State ($\mu, \lambda$) $\coloneqq$ Decompose-Flow($D, r, s,$)
+        \State $T \coloneqq \emptyset$
+
+        \For{each $P \in \text{supp}(\mu)$}
+          \State $P \coloneqq <v_0,a_1,v_1,a_2,v_2, \ldots , v_l>$        
+          \State $T \gets T \cup \{v_2\}$
+        \EndFor
+        \State \Return (feasible, $T$)
+
+      \ElsIf{val$(x) < u(\deltain[D](\{s\}))$}
+        \State \Return (infeasible, $(\mathcal{E}_1 \cap R, \mathcal{E}_2 \setminus R)$)  
+          
+      \EndIf
+        
+    \end{algorithmic}
+  \end{algorithm}
+
+  First, we will prove that the algorithm returns a common transversal when the outcome is feasible. This is the scenario which the algorithm reach line 10. In this case, all the entries in $x$ are integral, in fact they are in $\{0,1\}$. This holds even in this case that we have infinity capacities because if $\deltaout[D](\{v\})$ has an arc with infinity capacity, then every arc in $\deltain[D](\{v\})$ has capacity equal to 1. Given this and considering how the arcs in $A_2$ are built, we can afirm that in the feasible case we have exactly $m$ disjoint $rs$-paths in supp$(\mu)$. Also, supp$(\lambda)$ is the empty set because we do not have circuits in $D$. By that, each one of those paths has a unique $e \in \mathcal{E}_1$, a unique $e \in \mathcal{E}_2$ and a unique $v \in V$ such that $v \subseteq \mathcal{E}_1$ and $v \subseteq \mathcal{E}_2$. Given that the algorithm returns the set of all of those vertices, we return a common transversal.
+  
+  % and thus $C$ is a circulation $x'$ in $D'$ such that $l \leq x' \leq u'$. First, we have that $x \leq u$ because $x' \leq u'$ and $u'_a = u_a$ for every $a \in A(D)$. Second, because we made a call to Circulation, we have that excess$_{x'}(v) = 0$ (in $D'$) for every $v \in V(D')$. As we are returning $x \coloneqq x' \restrict{A(D)}$, we have that excess$_x(v)$ (in $D$), for an arbitrary $v \in V(D)$, is equal to $x(\deltaout[D'](v) \setminus \deltaout[D](v)) - x(\deltain[D'](v) \setminus \deltain[D](v))$. Given that, we will prove that excess$_x \leq b$ considering that $l_a \leq x_a \leq u'_a$ for $a \in A(D)$. For an arbitrary $v \in \{v \in V(D): b_v < 0\}$, we have that excess$_x(v) = -x_v$, thus $l_v \leq$ -excess$_x(v) \leq u'_v$, which is the same as $b_v \geq$ excess$_x(v) \geq -\mathcal{1}$. For an arbitrary $v \in \{v \in V(D): b_v = 0\}$, we have that excess$_x(v) = -x_v$, thus $l_v \leq$ -excess$_x(v) \leq u'_v$, which is the same as $b_v \geq$ excess$_x(v) \geq -\mathcal{1}$. Finally, for an arbitrary $v \in \{v \in V(D): b_v > 0\}$, we have that excess$_x(v) = x_{vs} - x_{rv}$, where $\varphi'(vs) = vs$ and $\varphi'(rv) = rv$. This also gives that $b_v \geq$ excess$_x(v) \geq -\mathcal{1}$. We proved that $x$ satisfies all the necessary conditions.
+
+  Finally, on the infeasible scenario (line 12), we have that $u(\deltaout[D](R)) < u(\deltain[D](\{s\}))$, which is the same as $|\deltaout[D](R)| < m$. Expanding the expression, we have that $|\deltaout[D](R) \cap A_1| + |\deltaout[D](R) \cap A_3| + |\deltaout[D](R) \cap A_5|< m$. Then we have that $|\mathcal{E}_1 \setminus R| + |(\bigcup{(\mathcal{E}_1 \cap R)}) \cap (\bigcup{(\mathcal{E}_2 \setminus R)})| + |\mathcal{E}_2 \cap R| < m$. Finally, we have that $ |(\bigcup{(\mathcal{E}_1 \cap R)}) \cap (\bigcup{(\mathcal{E}_2 \setminus R)})| < |\mathcal{E}_1 \cap R| + |\mathcal{E}_2 \setminus R| - m$. Thus, we also return the correct output in the infeasible scenario.
+ 
+\end{solution}
+
+\end{document}
